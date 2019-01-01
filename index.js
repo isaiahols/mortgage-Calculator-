@@ -1,7 +1,7 @@
 // // * * * IMPORTS AND DECLARATIONS * * * // //
 const express = require('express');
 const cc = require('./calcController');
-const ac = require('./authController');
+// const ac = require('./authController');
 
 
 const app = express();
@@ -25,7 +25,7 @@ app.get('/api/calc', cc.mortCalc);
 // -- TESTING -- //
 
 app.get('/testing', (req,res)=>{
-    res.status(200).send("hello world")
+    res.sendStatus(200).send("hello world")
     console.log('she is looking now');
     
 })

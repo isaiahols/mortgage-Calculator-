@@ -1,51 +1,120 @@
 const axios = require('axios')
 
-module.exports = {
-    pV: (rate, nper, pmt, fv) => {
-        rate = parseFloat(rate);
-        nper = parseFloat(nper);
-        pmt = parseFloat(pmt);
-        fv = parseFloat(fv);
-        if (nper == 0) {
-            alert("Why do you want to test me with zeros?");
-            return (0);
-        }
-        if (rate == 0) { // Interest rate is 0
-            pv_value = -(fv + (pmt * nper));
-        } else {
-            x = Math.pow(1 + rate, -nper);
-            y = Math.pow(1 + rate, nper);
-            pv_value = - (x * (fv * rate - pmt + y * pmt)) / rate;
-        }
-        pv_value = conv_number(pv_value, 2);
-        return (pv_value);
+
+const logic = {
+    pv: (rate, nper, pmt) => {
+        let r = (rate / 100) / 12
+        let n = nper * 12
+        let pValue = (pmt * (1 - Math.pow(1 + r, -n))) / r;
+        // console.log(pValue)
+        return pValue;
     },
-    pMT: (rate, periods, present, future, type) => {
 
-        future = future || 0;
-        type = type || 0;
+    realPmt: (r, n, pv) => {
+        return ((pv * r) / (1 - Math.pow(1 + r, -n)))
+    },
 
-        // rate = utils.parseNumber(rate);
-        // periods = utils.parseNumber(periods);
-        // present = utils.parseNumber(present);
-        // future = utils.parseNumber(future);
-        // type = utils.parseNumber(type);
-        // if (utils.anyIsError(rate, periods, present, future, type)) {
-        //     return error.value;
-        // }
+    maxLoanDP: (dp) => {
+        return (dp / .03) - dp
+    },
 
-        // Return payment
-        let result;
-        if (rate === 0) {
-            result = (present + future) / periods;
-        } else {
-            let term = Math.pow(1 + rate, periods);
-            if (type === 1) {
-                result = (future * rate / (term - 1) + present * rate / (1 - 1 / term)) / (1 + rate);
-            } else {
-                result = future * rate / (term - 1) + present * rate / (1 - 1 / term);
+    maxPmt: (income, debts, alimony, childSupport, childCareVA, hoa) => {
+        const combinedRatio = .45;
+        const maxPayment = (combinedRatio * income) - (debts + alimony + childSupport + childCareVA, hoa);
+        console.log("maxPayment", maxPayment)
+        return maxPayment;
+    },
+
+    rateConverter: (rate) => {
+        return (rate / 100) / 12
+    },
+
+    nperConverter: nper => {
+        return nper * 12
+    },
+
+    findTaxRate: () => {
+        return .008
+    },
+
+    findInsuranceRate: () => {
+        return .0027
+    },
+
+    findMI: () => {
+        return .0053
+    },
+
+    findCountyLimit: (state, county) => {
+        const stateSearch = state.split('')[0].toUpperCase()
+        let searchTerm = `${state} - `
+
+        return 600300
+    },
+
+    findLTV: () => {
+        return 93.11
+    },
+
+    pmt: (rate, nper, pv, max, extra, count = 0) => {
+
+
+        // Declerations
+        const r = logic.rateConverter(rate);
+        const n = logic.nperConverter(nper);
+        let mi = 0;
+
+        // Actual calc for payment
+
+        const pay = logic.realPmt(r, n, pv)
+        // const pay = ((pv*r)/(1-Math.pow(1+r,-n)))
+
+
+
+
+
+
+        // Add taxes, MI, and other things
+
+        if (extra.ltv > 80) {
+            // console.log('you need MI')
+            // console.log('miFac', extra.miFac)
+            mi = (extra.miFac * (pv / 12))
+            // console.log('MI', mi)
+        }
+        count++;
+
+
+
+
+
+        // Things used in testing and Recursion section
+
+        // const tax = pv * extra.taxRate / 12
+        const tax = (pv + extra.downPmt) * extra.taxRate / 12
+        // // ***** QUESTIONS ***** // //
+        // do taxes apply to the total value of the home?
+        // do the taxes need to take into account the down payment?
+        const compare = Math.round(pay + mi + tax)
+        const delta = compare / max;
+        const newerPV = pv + (compare - max < 0 ? (delta < .9 ? pv * .3 : pv * .01) : (delta > 1.1 ? -(pv * .3) : -pv * .01));
+
+
+        // testing and Recursion
+
+        if (compare === max || count === 2000) {
+            if (count === 2000) console.log('ran out of time');
+            console.log('count', count)
+            if (pv > extra.countyLimit) {
+                console.log('County Limit is the best you can do')
+                return extra.countyLimit + extra.downPmt
             }
+            return pv + extra.downPmt
         }
-        return -result;
+
+        // console.log(' --- ')
+        return logic.pmt(rate, nper, newerPV, max, extra, count)
     },
-}
+};
+
+module.exports = logic;
