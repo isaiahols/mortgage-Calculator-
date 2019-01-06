@@ -2,15 +2,15 @@ const axios = require('axios');
 const logic = require('./logic');
 
 
-const rate = 4,
-    // nper = 30,
-    // maxPmt = 2900,
-    // downPmt = 35000,
-    // countyLimit = 600300,
-    // taxRate = .008,
-    // insureRate = .0027,
-    // mi = .0053,
-    // ltv = 93.11;
+const rate = 4; //this comes from the external api
+// nper = 30,
+// maxPmt = 2900,
+// downPmt = 35000,
+// countyLimit = 600300,
+// taxRate = .008,
+// insureRate = .0027,
+// mi = .0053,
+// ltv = 93.11;
 
 
 module.exports = {
@@ -23,6 +23,8 @@ module.exports = {
             county,
             state,
             credit,
+            years,
+            loanType,
             monthlyIncome,
             debts,
             alimony,
@@ -34,20 +36,25 @@ module.exports = {
             vetDisability,
             hoa,
         } = req.body;
-
         const maxPmt = logic.maxPmt(monthlyIncome, debts, alimony, childSupport, childCareVA, hoa);
         const countyLimit = logic.findCountyLimit(state, county);
         const taxRate = logic.findTaxRate(state, county);
-        const insureRate = logic.findInsuranceRate();
-        const mi = logic.findMI();
-        const ltv = logic.findLTV();
+        const insureRate = logic.findInsuranceRate(state);
 
-        const maxValueDP = logic.maxLoanDP(downPmt)
-        maxValueRatio = logic.pv(rate, nper, maxPmt),
-            maxValue = Math.min(logic.pv(rate, nper, maxPmt), countyLimit, maxValueDP);
+        // This finds max values
+        const maxValueDP = logic.maxLoanDP(downPmt);
+        const maxValueRatio = logic.pv(rate, nper, maxPmt);
 
-        let mortgageAmount = logic.pmt(rate, nper, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit })
+        // This is the max value
+        const maxValue = Math.min(maxValueRatio, countyLimit, maxValueDP);
+        // find LTV estimate based on max value 
+        const ltv = logic.findLTV(maxValue, downPmt);
+        const mi = logic.findMI(credit, ltv, years);
 
+        // This is the recursive function that does the actual calculations 
+        let mortgageAmount = logic.pmt(rate, nper, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit, years, credit })
+
+        //Preparing Final Number to be Returned
         mortgageAmount = Math.round(mortgageAmount)
         console.log(Math.round(mortgageAmount))
 

@@ -25,7 +25,7 @@ app.get('/api/calc', cc.mortCalc);
 // -- TESTING -- //
 
 app.get('/testing', (req,res)=>{
-    res.sendStatus(200).send("hello world")
+    res.sendStatus(200).send("This is a Test that is working")
     console.log('she is looking now');
     
 })

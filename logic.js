@@ -1,4 +1,6 @@
 const axios = require('axios')
+const miTable = require('./dataTables/miTable.json');
+const taxInsurance = require('./dataTables/taxInsurance.json');
 
 
 const logic = {
@@ -20,7 +22,7 @@ const logic = {
 
     maxPmt: (income, debts, alimony, childSupport, childCareVA, hoa) => {
         const combinedRatio = .45;
-        const maxPayment = (combinedRatio * income) - (debts + alimony + childSupport + childCareVA, hoa);
+        const maxPayment = (combinedRatio * income) - (debts + alimony + childSupport + childCareVA + hoa);
         console.log("maxPayment", maxPayment)
         return maxPayment;
     },
@@ -33,27 +35,68 @@ const logic = {
         return nper * 12
     },
 
-    findTaxRate: () => {
-        return .008
+    findTaxRate: (state) => {
+        const stateFiltered = taxInsurance.find(e => {
+            return e.State === state
+        })
+        
+        const taxRate = stateFiltered.Tax.slice(0,4)/100
+        console.log(taxRate);
+        
+        return taxRate
+    },
+    
+    findInsuranceRate: (state) => {
+        const stateFiltered = taxInsurance.find(e => {
+            return e.State === state
+        })
+        console.log(stateFiltered);
+        
+        const insuranceRate = stateFiltered.Insurance.slice(0,4)/100
+        console.log(insuranceRate);
+    
+        return insuranceRate
     },
 
-    findInsuranceRate: () => {
-        return .0027
-    },
+    findMI: (credit, ltv, years) => {
+        const creditFiltered = miTable.filter(e => {
 
-    findMI: () => {
+            if (e.Credit.slice(0, 3) === credit.slice(0, 3)) {
+                return e
+            }
+        })
+
+        const ltvFiltered = creditFiltered.filter(e => {
+            const ltvRange = e["LTV Range"].split('');
+
+            let upperLimit = ltvRange.slice(6).join('') * 1;
+            let lowerLimit = ltvRange.slice(0, 5).join('') * 1;
+
+            if (ltv <= upperLimit && ltv >= lowerLimit) {
+                return e
+            }
+        })
+
+        let rate = years <= 20 ? ltvFiltered[0]["<= 20 yr"] : ltvFiltered[0]["> 20 yr"];
+        rate = rate.slice(0, 4) / 100
+
+        return rate
         return .0053
     },
 
     findCountyLimit: (state, county) => {
-        const stateSearch = state.split('')[0].toUpperCase()
-        let searchTerm = `${state} - `
+        const stateSearch = state[0].toUpperCase();
+        let searchTerm = `${state} - `;
 
         return 600300
     },
 
-    findLTV: () => {
-        return 93.11
+    findLTV: (maxValue, downPmt) => {
+        let ltv = maxValue / (maxValue + (downPmt * 1));
+        ltv = (ltv * 100).toFixed(2)
+
+        return ltv;
+        // return 94.49;
     },
 
     pmt: (rate, nper, pv, max, extra, count = 0) => {
@@ -75,12 +118,13 @@ const logic = {
 
 
         // Add taxes, MI, and other things
+        const ltv = logic.findLTV(pv, extra.downPmt);
+        extra.ltv = ltv;
+
 
         if (extra.ltv > 80) {
-            // console.log('you need MI')
-            // console.log('miFac', extra.miFac)
-            mi = (extra.miFac * (pv / 12))
-            // console.log('MI', mi)
+            extra.mi = logic.findMI(extra.credit, ltv, extra.years);
+            mi = (extra.mi * (pv / 12));
         }
         count++;
 
@@ -91,12 +135,15 @@ const logic = {
         // Things used in testing and Recursion section
 
         // const tax = pv * extra.taxRate / 12
-        const tax = (pv + extra.downPmt) * extra.taxRate / 12
+        const tax = (pv + extra.downPmt) * extra.taxRate / 12;
+        const insurance = (pv + extra.downPmt) * extra.insureRate / 12;
         // // ***** QUESTIONS ***** // //
         // do taxes apply to the total value of the home?
         // do the taxes need to take into account the down payment?
-        const compare = Math.round(pay + mi + tax)
+        const compare = Math.round(pay + mi + tax + insurance)
         const delta = compare / max;
+
+
         const newerPV = pv + (compare - max < 0 ? (delta < .9 ? pv * .3 : pv * .01) : (delta > 1.1 ? -(pv * .3) : -pv * .01));
 
 
@@ -109,7 +156,7 @@ const logic = {
                 console.log('County Limit is the best you can do')
                 return extra.countyLimit + extra.downPmt
             }
-            return pv + extra.downPmt
+            return newerPV + extra.downPmt
         }
 
         // console.log(' --- ')
