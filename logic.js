@@ -1,6 +1,7 @@
 const axios = require('axios')
 const miTable = require('./dataTables/miTable.json');
 const taxInsurance = require('./dataTables/taxInsurance.json');
+const loanLimits = require('./dataTables/loanLimits.json');
 
 
 const logic = {
@@ -39,22 +40,19 @@ const logic = {
         const stateFiltered = taxInsurance.find(e => {
             return e.State === state
         })
-        
-        const taxRate = stateFiltered.Tax.slice(0,4)/100
-        console.log(taxRate);
-        
+
+        const taxRate = stateFiltered.Tax.slice(0, 4) / 100
+
         return taxRate
     },
-    
+
     findInsuranceRate: (state) => {
         const stateFiltered = taxInsurance.find(e => {
             return e.State === state
         })
-        console.log(stateFiltered);
-        
-        const insuranceRate = stateFiltered.Insurance.slice(0,4)/100
-        console.log(insuranceRate);
-    
+
+        const insuranceRate = stateFiltered.Insurance.slice(0, 4) / 100
+
         return insuranceRate
     },
 
@@ -66,7 +64,7 @@ const logic = {
             }
         })
 
-        const ltvFiltered = creditFiltered.filter(e => {
+        const ltvFiltered = creditFiltered.find(e => {
             const ltvRange = e["LTV Range"].split('');
 
             let upperLimit = ltvRange.slice(6).join('') * 1;
@@ -77,18 +75,25 @@ const logic = {
             }
         })
 
-        let rate = years <= 20 ? ltvFiltered[0]["<= 20 yr"] : ltvFiltered[0]["> 20 yr"];
+        let rate = years <= 20 ? ltvFiltered["<= 20 yr"] : ltvFiltered["> 20 yr"];
         rate = rate.slice(0, 4) / 100
 
         return rate
-        return .0053
     },
 
-    findCountyLimit: (state, county) => {
-        const stateSearch = state[0].toUpperCase();
-        let searchTerm = `${state} - `;
+    findCountyLimit: (state, county, type) => {
+        const searchTerm = `${state} - ${county.toUpperCase()}`;
+        const foundCounty = loanLimits.find(e => {
 
-        return 600300
+            return e.County === searchTerm
+        })
+        if (type === 'Conv.') {
+            type = 'Conforming'
+        }
+
+        let limit = foundCounty[type] * 1
+
+        return limit
     },
 
     findLTV: (maxValue, downPmt) => {
@@ -96,7 +101,6 @@ const logic = {
         ltv = (ltv * 100).toFixed(2)
 
         return ltv;
-        // return 94.49;
     },
 
     pmt: (rate, nper, pv, max, extra, count = 0) => {

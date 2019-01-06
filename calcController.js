@@ -37,7 +37,7 @@ module.exports = {
             hoa,
         } = req.body;
         const maxPmt = logic.maxPmt(monthlyIncome, debts, alimony, childSupport, childCareVA, hoa);
-        const countyLimit = logic.findCountyLimit(state, county);
+        const countyLimit = logic.findCountyLimit(state, county, loanType);
         const taxRate = logic.findTaxRate(state, county);
         const insureRate = logic.findInsuranceRate(state);
 
@@ -59,5 +59,8 @@ module.exports = {
         console.log(Math.round(mortgageAmount))
 
         res.status(200).send({ mortgageAmount, message: 'you need to buy a bigger home' })
+    },
+    data: (req, res) => {
+        res.status(200).send('here is some data')
     }
 }
