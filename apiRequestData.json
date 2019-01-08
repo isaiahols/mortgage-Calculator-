@@ -1,0 +1,688 @@
+[
+    {
+        "id": "8e85d81c-afc1-4d94-88e9-dcd7c1ae9340",
+        "name": "01 - Optimal Blue API OAuth",
+        "url": "https://login.microsoftonline.com/marketplaceauth.optimalblue.com/oauth2/token",
+        "description": "When you hit send you should receive a response as follows:\r{\r\"token_type\": \"Bearer\",\r\"expires_in\": \"3599\",\r\"ext_expires_in\": \"0\",\r\"expires_on\": \"1484600352\",\r\"not_before\": \"1484596452\",\r\"resource\": \"<Requested Resource>\",\r\"access_token\": \"<Returned Token>”\r}\rThe “access_token” is your Bearer token, you’ll need to pass in the Header of any API request. You can accomplish that as follows:",
+        "data": [
+            {
+                "key": "client_id",
+                "value": "03137832-73ce-43b1-ae99-9f3a2a59bb0a",
+                "description": "",
+                "type": "text",
+                "enabled": true
+            },
+            {
+                "key": "client_secret",
+                "value": "LqwD9/wazGtjPr7XehGeyxOwgIW7cwqUZSFliMXgJMOa=",
+                "description": "",
+                "type": "text",
+                "enabled": true
+            },
+            {
+                "key": "grant_type",
+                "value": "client_credentials",
+                "description": "",
+                "type": "text",
+                "enabled": true
+            },
+            {
+                "key": "resource",
+                "value": "https://marketplaceauth.optimalblue.com/d35ae893-2367-40b5-a9b4-bfab3acb7991",
+                "description": "",
+                "type": "text",
+                "enabled": true
+            }
+        ],
+        "dataMode": "urlencoded",
+        "headerData": [
+            {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/x-www-form-urlencoded",
+                "description": "",
+                "type": "text"
+            }
+        ],
+        "method": "POST",
+        "pathVariableData": [],
+        "queryParams": [],
+        "auth": null,
+        "events": [
+            {
+                "listen": "test",
+                "script": {
+                    "id": "78d0ac40-3659-4e4a-a0b3-16db5c3333e4",
+                    "exec": [
+                        ""
+                    ],
+                    "type": "text/javascript"
+                }
+            }
+        ],
+        "folder": "14ac1689-30ab-4262-a00d-7f87075293bb",
+        "preRequestScript": null,
+        "tests": null,
+        "currentHelper": null,
+        "helperAttributes": null,
+        "collectionId": "d9cb43fd-ed0b-4910-b9ac-0f354161db62",
+        "headers": "Content-Type: application/x-www-form-urlencoded\n",
+        "pathVariables": []
+    },
+    {
+        "id": "dc0ef2bd-8f28-48a9-9bfa-d0f98cd6870d",
+        "name": "02 - Product Group Search",
+        "url": "https://marketplace.optimalblue.com/full/api/businesschannels/:businessChannelId/originators/:originatorId/productgroupsearch?",
+        "description": null,
+        "data": [],
+        "dataMode": "raw",
+        "headerData": [
+            {
+                "key": "api-version",
+                "value": "3",
+                "enabled": true
+            },
+            {
+                "key": "Content-Type",
+                "value": "application/json",
+                "description": "",
+                "type": "text",
+                "enabled": true
+            },
+            {
+                "key": "Authorization",
+                "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiJodHRwczovL21hcmtldHBsYWNlYXV0aC5vcHRpbWFsYmx1ZS5jb20vZDM1YWU4OTMtMjM2Ny00MGI1LWE5YjQtYmZhYjNhY2I3OTkxIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4LyIsImlhdCI6MTU0NTk3Mjc1NCwibmJmIjoxNTQ1OTcyNzU0LCJleHAiOjE1NDU5NzY2NTQsImFpbyI6IjQyUmdZTGlZVnVZMWZhc2FGNWZuM3owV3BiRWJBQT09IiwiYXBwaWQiOiIwMzEzNzgzMi03M2NlLTQzYjEtYWU5OS05ZjNhMmE1OWJiMGEiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kMDAyNmY5OS1iOTgyLTQ3MjQtODJjNS1lZTAxNGY1YjYzMTgvIiwib2lkIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1Iiwicm9sZXMiOlsiTWFya2V0cGxhY2UuU3VwcG9ydC5TZXJ2aWNlcyIsIk1hcmtldHBsYWNlLlByaWNpbmcuQ29uc3VtZXIiLCJNYXJrZXRwbGFjZS5QcmljaW5nLkZ1bGwiXSwic3ViIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1IiwidGlkIjoiZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4IiwidXRpIjoibXhfUnFlSmRUMG1CUGZtWDB6bzVBQSIsInZlciI6IjEuMCJ9.szaUdIJVVlPwPpsA4mIaofrNJX5PuDwo_nUFvSI4Tc9JjdYvprrJa36Us-OaCaDsMqJZhBirrlecORyyNr_4aNkdcvphjX1NaT0r5F1UShFMePuv7VxXDbQaHnCrlpgr19j8YEArdxzYR-KWb-ij3J1DbtzxL5CJTpAmT37c8K6_7xksOLGu-IOAMVMb4dnaaFng3451_wIogTVO1p4pGBP1CD4Q4B6LvFq4AIfepgxtVVvrCy9IHql6SexDXiQxebf2TK6vCNrz6x4ERqyzmmaZDeS28TBUOPBJBGkPwO1ZtEx7o00W5vYREwplCzhp1AKG_Of6zv73M6_8pADWxQ",
+                "description": "",
+                "type": "text",
+                "enabled": true
+            }
+        ],
+        "method": "POST",
+        "pathVariableData": [
+            {
+                "key": "businessChannelId",
+                "value": "90019",
+                "description": "Configuration Reports > Users w/ Full Detail"
+            },
+            {
+                "key": "originatorId",
+                "value": "943018"
+            }
+        ],
+        "queryParams": [],
+        "auth": null,
+        "events": null,
+        "folder": "14ac1689-30ab-4262-a00d-7f87075293bb",
+        "responses": [
+            {
+                "id": "074772e1-d9d2-439f-9b89-e035550753d0",
+                "name": "Product Group Search - Refi - Conforming & ARM",
+                "status": null,
+                "mime": null,
+                "language": "json",
+                "text": "{\n    \"productGroups\": [\n        {\n            \"apr\": 4.529,\n            \"armIndex\": \"\",\n            \"closingCost\": 1011,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.375,\n            \"rate\": 4.5,\n            \"principalAndInterest\": 1520,\n            \"rebate\": 1125,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_133_149_0_0_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1010\",\n            \"productId\": 28774241,\n            \"productName\": \"Conforming 30 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1520.06\n        },\n        {\n            \"apr\": 7.683,\n            \"armIndex\": \"\",\n            \"closingCost\": 2271,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 99.955,\n            \"rate\": 7.625,\n            \"principalAndInterest\": 2123,\n            \"rebate\": 0,\n            \"discount\": 135,\n            \"productGroupId\": \"1_128_133_149_0_0_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"NonConforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"6930\",\n            \"productId\": 28734513,\n            \"productName\": \"Non-Conforming Renew QM Jumbo 6900 Series 30 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 2123.38\n        },\n        {\n            \"apr\": 4.414,\n            \"armIndex\": \"\",\n            \"closingCost\": 1011,\n            \"loanTerm\": \"20 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.375,\n            \"rate\": 4.375,\n            \"principalAndInterest\": 1878,\n            \"rebate\": 1125,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_133_151_0_0_0\",\n            \"amortizationTerm\": \"20\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1015\",\n            \"productId\": 28774239,\n            \"productName\": \"Conforming 20 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1877.77\n        },\n        {\n            \"apr\": 4.899,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 1599,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 2.25,\n            \"price\": 100.179,\n            \"rate\": 4.625,\n            \"principalAndInterest\": 1542,\n            \"rebate\": 537,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_134_149_273_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"Quicken Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"L10\",\n            \"productId\": 28715652,\n            \"productName\": \"Conventional 10/1 ARM DU Approved\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1542.42\n        },\n        {\n            \"apr\": 7.047,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 1692,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 4.5,\n            \"price\": 100.148,\n            \"rate\": 6.75,\n            \"principalAndInterest\": 1946,\n            \"rebate\": 444,\n            \"discount\": 0,\n            \"productGroupId\": \"1_128_134_149_273_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"NonConforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"6910\",\n            \"productId\": 28734516,\n            \"productName\": \"Non-Conforming Renew QM Jumbo 6900 Series 10/1 ARM\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1945.79\n        }\n    ],\n    \"totalLoanAmountDetails\": {\n        \"totalLoanAmount\": 300000\n    },\n    \"cltv\": 0,\n    \"ltv\": 75,\n    \"hcltv\": 0,\n    \"searchId\": \"1523157112E1545980221\",\n    \"searchTime\": \"2018-12-28T06:57:01.6315364Z\"\n}",
+                "responseCode": {
+                    "code": 200,
+                    "name": "OK"
+                },
+                "requestObject": {
+                    "data": "{\n    \"borrowerInformation\": {\n        \"assetDocumentation\": \"Verified\",\n        \"pledgedAssets\": false,\n        \"citizenship\": \"USCitizen\",\n        \"employmentDocumentation\": \"Verified\",\n        \"firstTimeHomeBuyer\": false,\n        \"incomeDocumentation\": \"Verified\",\n        \"monthsReserves\": 24,\n        \"selfEmployed\": false,\n        \"waiveEscrows\": false,\n        \"mortgageLatesX30\": 0,\n        \"mortgageLatesX60\": 0,\n        \"mortgageLatesX90\": 0,\n        \"mortgageLatesX120\": 0,\n        \"mortgageLatesRolling\": 0,\n        \"bankruptcy\": \"Never\",\n        \"foreclosure\": \"Never\"\n    },\n    \"loanInformation\": {\n        \"loanPurpose\": \"RefiRateTermLimitedCO\",\n        \"lienType\": \"First\",\n        \"amortizationTypes\": [\n            \"ARM\",\n            \"Fixed\"\n        ],\n        \"armFixedTerms\": [\n            \"TenYear\"\n        ],\n        \"automatedUnderwritingSystem\": \"NotSpecified\",\n        \"borrowerPaidMI\": \"Yes\",\n        \"buydown\": \"None\",\n        \"feesIn\": \"No\",\n        \"expandedApprovalLevel\": \"NotApplicable\",\n        \"interestOnly\": false,\n        \"baseLoanAmount\": 300000,\n        \"loanTerms\": [\n            \"ThirtyYear\",\n            \"TwentyYear\"\n        ],\n        \"productTypes\": [\n            \"StandardProducts\",\n            \"AffordableProducts\"\n        ],\n        \"loanType\": \"Conforming\",\n        \"prepaymentPenalty\": \"None\",\n        \"includeLOCompensationInPricing\": \"YesLenderPaid\",\n        \"currentServicer\": \"ACH Trust\",\n        \"calculateTotalLoanAmount\": true\n    },\n    \"propertyInformation\": {\n        \"appraisedValue\": 400000,\n        \"occupancy\": \"PrimaryResidence\",\n        \"county\": \"Salt Lake\",\n        \"state\": \"UT\",\n        \"zipCode\": \"84020\",\n        \"propertyType\": \"SingleFamily\",\n        \"corporateRelocation\": false,\n        \"salesPrice\": 400000,\n        \"numberOfStories\": 1,\n        \"numberOfUnits\": \"OneUnit\",\n        \"construction\": false\n    },\n    \"representativeFICO\": 760,\n    \"loanLevelDebtToIncomeRatio\": 38\n}",
+                    "dataMode": "raw",
+                    "headerData": [
+                        {
+                            "key": "api-version",
+                            "value": "3",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiJodHRwczovL21hcmtldHBsYWNlYXV0aC5vcHRpbWFsYmx1ZS5jb20vZDM1YWU4OTMtMjM2Ny00MGI1LWE5YjQtYmZhYjNhY2I3OTkxIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4LyIsImlhdCI6MTU0NTk3ODM5MSwibmJmIjoxNTQ1OTc4MzkxLCJleHAiOjE1NDU5ODIyOTEsImFpbyI6IjQyUmdZSmhhenYzbXFrU05hblBrQ2U2NDNScHRBQT09IiwiYXBwaWQiOiIwMzEzNzgzMi03M2NlLTQzYjEtYWU5OS05ZjNhMmE1OWJiMGEiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kMDAyNmY5OS1iOTgyLTQ3MjQtODJjNS1lZTAxNGY1YjYzMTgvIiwib2lkIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1Iiwicm9sZXMiOlsiTWFya2V0cGxhY2UuU3VwcG9ydC5TZXJ2aWNlcyIsIk1hcmtldHBsYWNlLlByaWNpbmcuQ29uc3VtZXIiLCJNYXJrZXRwbGFjZS5QcmljaW5nLkZ1bGwiXSwic3ViIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1IiwidGlkIjoiZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4IiwidXRpIjoiQzVfd0VfQnV2MEtXeng4TXJIUTlBQSIsInZlciI6IjEuMCJ9.uboOaJPCmwYgT6swPFrmN6vWjUypZupCdxFYnLgkJiOBPSiE_TfYtPmH9vXS1vPJ2HjyQ7e1XBYzmi6_1YUIAVM3GWZmz1yafE-ImJOSEgoSvPnUP0fzEndvr-cuONxkJTjNhyr4iJ8iO0tT9ix0WTtWz5ttmH7I27Rc-yibOxNp3_ANsTuokEtIdrsrwKBdd3w7ZBCdTYXyGV9PI2IV79lbvDXPXNDzLgs-vh5EhevMKCfPPHZh5qrhQ0r-QV0yxFXbb_ZIoHheC-Au8uPk2pdtEQxVzkXoJrt0RNF0Tmj5i22Z9Hm8tvKrdSMdHpIGywFdzQYyjPFx40pSXw5qnA",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        }
+                    ],
+                    "method": "POST",
+                    "pathVariableData": [
+                        {
+                            "key": "businessChannelId",
+                            "value": "90019",
+                            "description": "Configuration Reports > Users w/ Full Detail"
+                        },
+                        {
+                            "key": "originatorId",
+                            "value": "943018"
+                        }
+                    ],
+                    "queryParams": [],
+                    "url": "https://marketplace.optimalblue.com/full/api/businesschannels/:businessChannelId/originators/:originatorId/productgroupsearch?"
+                },
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Pragma",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Transfer-Encoding",
+                        "value": "chunked"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json; charset=utf-8"
+                    },
+                    {
+                        "key": "Content-Encoding",
+                        "value": "gzip"
+                    },
+                    {
+                        "key": "Expires",
+                        "value": "-1"
+                    },
+                    {
+                        "key": "Vary",
+                        "value": "Accept-encoding"
+                    },
+                    {
+                        "key": "api-supported-versions",
+                        "value": "3"
+                    },
+                    {
+                        "key": "api-deprecated-versions",
+                        "value": "1,2"
+                    },
+                    {
+                        "key": "Request-Context",
+                        "value": "appId=cid-v1:e9c13eb2-b984-4ae4-8cc5-84270656bbb4"
+                    },
+                    {
+                        "key": "Access-Control-Expose-Headers",
+                        "value": "Request-Context"
+                    },
+                    {
+                        "key": "X-AspNet-Version",
+                        "value": "4.0.30319"
+                    },
+                    {
+                        "key": "X-Powered-By",
+                        "value": "ASP.NET"
+                    },
+                    {
+                        "key": "Date",
+                        "value": "Fri, 28 Dec 2018 06:57:01 GMT"
+                    }
+                ],
+                "cookies": null,
+                "request": "dc0ef2bd-8f28-48a9-9bfa-d0f98cd6870d",
+                "collection": "d9cb43fd-ed0b-4910-b9ac-0f354161db62"
+            },
+            {
+                "id": "1fe72d86-ba22-4c44-8aa3-d621356b2a82",
+                "name": "Product Group Search - Conventional & ARM",
+                "status": null,
+                "mime": null,
+                "language": "json",
+                "text": "{\n    \"productGroups\": [\n        {\n            \"apr\": 4.559,\n            \"armIndex\": \"\",\n            \"closingCost\": 2054,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.375,\n            \"rate\": 4.5,\n            \"principalAndInterest\": 1520,\n            \"rebate\": 1125,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_133_149_0_0_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1010\",\n            \"productId\": 28774241,\n            \"productName\": \"Conforming 30 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1520.06\n        },\n        {\n            \"apr\": 7.589,\n            \"armIndex\": \"\",\n            \"closingCost\": 2882,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.099,\n            \"rate\": 7.5,\n            \"principalAndInterest\": 2098,\n            \"rebate\": 297,\n            \"discount\": 0,\n            \"productGroupId\": \"1_128_133_149_0_0_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"NonConforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"6930\",\n            \"productId\": 28734513,\n            \"productName\": \"Non-Conforming Renew QM Jumbo 6900 Series 30 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 2097.64\n        },\n        {\n            \"apr\": 4.455,\n            \"armIndex\": \"\",\n            \"closingCost\": 2054,\n            \"loanTerm\": \"20 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.375,\n            \"rate\": 4.375,\n            \"principalAndInterest\": 1878,\n            \"rebate\": 1125,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_133_151_0_0_0\",\n            \"amortizationTerm\": \"20\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1015\",\n            \"productId\": 28774239,\n            \"productName\": \"Conforming 20 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1877.77\n        },\n        {\n            \"apr\": 4.929,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 2642,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 2.25,\n            \"price\": 100.179,\n            \"rate\": 4.625,\n            \"principalAndInterest\": 1542,\n            \"rebate\": 537,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_134_149_273_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"Quicken Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"L10\",\n            \"productId\": 28715652,\n            \"productName\": \"Conventional 10/1 ARM DU Approved\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1542.42\n        },\n        {\n            \"apr\": 6.998,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 2573,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 4.5,\n            \"price\": 100.202,\n            \"rate\": 6.625,\n            \"principalAndInterest\": 1921,\n            \"rebate\": 606,\n            \"discount\": 0,\n            \"productGroupId\": \"1_128_134_149_273_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"NonConforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"6910\",\n            \"productId\": 28734516,\n            \"productName\": \"Non-Conforming Renew QM Jumbo 6900 Series 10/1 ARM\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1920.93\n        }\n    ],\n    \"totalLoanAmountDetails\": {\n        \"totalLoanAmount\": 300000\n    },\n    \"cltv\": 0,\n    \"ltv\": 75,\n    \"hcltv\": 0,\n    \"searchId\": \"1523143057E1545974107\",\n    \"searchTime\": \"2018-12-28T05:15:07.0523599Z\"\n}",
+                "responseCode": {
+                    "code": 200,
+                    "name": "OK"
+                },
+                "requestObject": {
+                    "data": "{\n    \"borrowerInformation\": {\n        \"assetDocumentation\": \"Verified\",\n        \"pledgedAssets\": false,\n        \"citizenship\": \"USCitizen\",\n        \"employmentDocumentation\": \"Verified\",\n        \"firstTimeHomeBuyer\": false,\n        \"incomeDocumentation\": \"Verified\",\n        \"monthsReserves\": 24,\n        \"selfEmployed\": false,\n        \"waiveEscrows\": false,\n        \"mortgageLatesX30\": 0,\n        \"mortgageLatesX60\": 0,\n        \"mortgageLatesX90\": 0,\n        \"mortgageLatesX120\": 0,\n        \"mortgageLatesRolling\": 0,\n        \"bankruptcy\": \"Never\",\n        \"foreclosure\": \"Never\"\n    },\n    \"loanInformation\": {\n        \"loanPurpose\": \"Purchase\",\n        \"lienType\": \"First\",\n        \"amortizationTypes\": [\n            \"ARM\",\n            \"Fixed\"\n        ],\n        \"armFixedTerms\": [\n            \"TenYear\"\n        ],\n        \"automatedUnderwritingSystem\": \"NotSpecified\",\n        \"borrowerPaidMI\": \"Yes\",\n        \"buydown\": \"None\",\n        \"feesIn\": \"No\",\n        \"expandedApprovalLevel\": \"NotApplicable\",\n        \"fhaCaseAssigned\": \"2017-02-06T06:00:00+00:00\",\n        \"fhaCaseEndorsement\": \"2017-02-06T06:00:00+00:00\",\n        \"interestOnly\": false,\n        \"baseLoanAmount\": 300000,\n        \"loanTerms\": [\n            \"ThirtyYear\",\n            \"TwentyYear\"\n        ],\n        \"productTypes\": [\n            \"StandardProducts\",\n            \"AffordableProducts\"\n        ],\n        \"loanType\": \"Conforming\",\n        \"prepaymentPenalty\": \"None\",\n        \"includeLOCompensationInPricing\": \"YesLenderPaid\",\n        \"currentServicer\": \"ACH Trust\",\n        \"calculateTotalLoanAmount\": true\n    },\n    \"propertyInformation\": {\n        \"appraisedValue\": 400000,\n        \"occupancy\": \"PrimaryResidence\",\n        \"county\": \"Salt Lake\",\n        \"state\": \"UT\",\n        \"zipCode\": \"84020\",\n        \"propertyType\": \"SingleFamily\",\n        \"corporateRelocation\": false,\n        \"salesPrice\": 400000,\n        \"numberOfStories\": 1,\n        \"numberOfUnits\": \"OneUnit\",\n        \"construction\": false\n    },\n    \"representativeFICO\": 760,\n    \"loanLevelDebtToIncomeRatio\": 38\n}",
+                    "dataMode": "raw",
+                    "headerData": [
+                        {
+                            "key": "api-version",
+                            "value": "3",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiJodHRwczovL21hcmtldHBsYWNlYXV0aC5vcHRpbWFsYmx1ZS5jb20vZDM1YWU4OTMtMjM2Ny00MGI1LWE5YjQtYmZhYjNhY2I3OTkxIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4LyIsImlhdCI6MTU0NTk3Mjc1NCwibmJmIjoxNTQ1OTcyNzU0LCJleHAiOjE1NDU5NzY2NTQsImFpbyI6IjQyUmdZTGlZVnVZMWZhc2FGNWZuM3owV3BiRWJBQT09IiwiYXBwaWQiOiIwMzEzNzgzMi03M2NlLTQzYjEtYWU5OS05ZjNhMmE1OWJiMGEiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kMDAyNmY5OS1iOTgyLTQ3MjQtODJjNS1lZTAxNGY1YjYzMTgvIiwib2lkIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1Iiwicm9sZXMiOlsiTWFya2V0cGxhY2UuU3VwcG9ydC5TZXJ2aWNlcyIsIk1hcmtldHBsYWNlLlByaWNpbmcuQ29uc3VtZXIiLCJNYXJrZXRwbGFjZS5QcmljaW5nLkZ1bGwiXSwic3ViIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1IiwidGlkIjoiZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4IiwidXRpIjoibXhfUnFlSmRUMG1CUGZtWDB6bzVBQSIsInZlciI6IjEuMCJ9.szaUdIJVVlPwPpsA4mIaofrNJX5PuDwo_nUFvSI4Tc9JjdYvprrJa36Us-OaCaDsMqJZhBirrlecORyyNr_4aNkdcvphjX1NaT0r5F1UShFMePuv7VxXDbQaHnCrlpgr19j8YEArdxzYR-KWb-ij3J1DbtzxL5CJTpAmT37c8K6_7xksOLGu-IOAMVMb4dnaaFng3451_wIogTVO1p4pGBP1CD4Q4B6LvFq4AIfepgxtVVvrCy9IHql6SexDXiQxebf2TK6vCNrz6x4ERqyzmmaZDeS28TBUOPBJBGkPwO1ZtEx7o00W5vYREwplCzhp1AKG_Of6zv73M6_8pADWxQ",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        }
+                    ],
+                    "method": "POST",
+                    "pathVariableData": [
+                        {
+                            "key": "businessChannelId",
+                            "value": "90019",
+                            "description": "Configuration Reports > Users w/ Full Detail"
+                        },
+                        {
+                            "key": "originatorId",
+                            "value": "943018"
+                        }
+                    ],
+                    "queryParams": [],
+                    "url": "https://marketplace.optimalblue.com/full/api/businesschannels/:businessChannelId/originators/:originatorId/productgroupsearch?"
+                },
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Pragma",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Transfer-Encoding",
+                        "value": "chunked"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json; charset=utf-8"
+                    },
+                    {
+                        "key": "Content-Encoding",
+                        "value": "gzip"
+                    },
+                    {
+                        "key": "Expires",
+                        "value": "-1"
+                    },
+                    {
+                        "key": "Vary",
+                        "value": "Accept-encoding"
+                    },
+                    {
+                        "key": "api-supported-versions",
+                        "value": "3"
+                    },
+                    {
+                        "key": "api-deprecated-versions",
+                        "value": "1,2"
+                    },
+                    {
+                        "key": "Request-Context",
+                        "value": "appId=cid-v1:e9c13eb2-b984-4ae4-8cc5-84270656bbb4"
+                    },
+                    {
+                        "key": "Access-Control-Expose-Headers",
+                        "value": "Request-Context"
+                    },
+                    {
+                        "key": "X-AspNet-Version",
+                        "value": "4.0.30319"
+                    },
+                    {
+                        "key": "X-Powered-By",
+                        "value": "ASP.NET"
+                    },
+                    {
+                        "key": "Date",
+                        "value": "Fri, 28 Dec 2018 05:15:07 GMT"
+                    }
+                ],
+                "cookies": null,
+                "request": "dc0ef2bd-8f28-48a9-9bfa-d0f98cd6870d",
+                "collection": "d9cb43fd-ed0b-4910-b9ac-0f354161db62"
+            },
+            {
+                "id": "891efbcc-d972-4cbf-a238-f96417fe0d31",
+                "name": "Product Group Search - 300K / 400K, 10,15,20,30 yr Conventional, 3,5,7,10 yr ARM",
+                "status": null,
+                "mime": null,
+                "language": "json",
+                "text": "{\n    \"productGroups\": [\n        {\n            \"apr\": 4.7,\n            \"armIndex\": \"\",\n            \"closingCost\": 2804,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.125,\n            \"rate\": 4.625,\n            \"principalAndInterest\": 1542,\n            \"rebate\": 375,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_133_149_0_0_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1010\",\n            \"productId\": 28774241,\n            \"productName\": \"Conforming 30 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1542.42\n        },\n        {\n            \"apr\": 7.714,\n            \"armIndex\": \"\",\n            \"closingCost\": 3164,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.005,\n            \"rate\": 7.625,\n            \"principalAndInterest\": 2123,\n            \"rebate\": 15,\n            \"discount\": 0,\n            \"productGroupId\": \"1_128_133_149_0_0_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"NonConforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"6930\",\n            \"productId\": 28734513,\n            \"productName\": \"Non-Conforming Renew QM Jumbo 6900 Series 30 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 2123.38\n        },\n        {\n            \"apr\": 4.581,\n            \"armIndex\": \"\",\n            \"closingCost\": 2054,\n            \"loanTerm\": \"20 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.375,\n            \"rate\": 4.5,\n            \"principalAndInterest\": 1898,\n            \"rebate\": 1125,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_133_151_0_0_0\",\n            \"amortizationTerm\": \"20\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1015\",\n            \"productId\": 28774239,\n            \"productName\": \"Conforming 20 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1897.95\n        },\n        {\n            \"apr\": 4.227,\n            \"armIndex\": \"\",\n            \"closingCost\": 2054,\n            \"loanTerm\": \"15 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.375,\n            \"rate\": 4.125,\n            \"principalAndInterest\": 2238,\n            \"rebate\": 1125,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_133_152_0_0_0\",\n            \"amortizationTerm\": \"15\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1020\",\n            \"productId\": 28774238,\n            \"productName\": \"Conforming 15 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 2237.9\n        },\n        {\n            \"apr\": 4.272,\n            \"armIndex\": \"\",\n            \"closingCost\": 2054,\n            \"loanTerm\": \"10 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.375,\n            \"rate\": 4.125,\n            \"principalAndInterest\": 3055,\n            \"rebate\": 1125,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_133_153_0_0_0\",\n            \"amortizationTerm\": \"10\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1001\",\n            \"productId\": 28774237,\n            \"productName\": \"Conforming 10 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 3055.21\n        },\n        {\n            \"apr\": 5.296,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 6047,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 2.25,\n            \"price\": 99.044,\n            \"rate\": 4.375,\n            \"principalAndInterest\": 1498,\n            \"rebate\": 0,\n            \"discount\": 2868,\n            \"productGroupId\": \"1_127_134_149_270_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"1431C\",\n            \"productId\": 28733978,\n            \"productName\": \"FNMA Conforming 3/1 ARM\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1497.86\n        },\n        {\n            \"apr\": 5.077,\n            \"armIndex\": \"5 Year CMT\",\n            \"closingCost\": 7949,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 2.25,\n            \"price\": 98.41,\n            \"rate\": 4.625,\n            \"principalAndInterest\": 1542,\n            \"rebate\": 0,\n            \"discount\": 4770,\n            \"productGroupId\": \"1_127_134_149_271_7_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"Caliber - Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"CT55\",\n            \"productId\": 28784765,\n            \"productName\": \"Conventional Conforming 5/5 ARM\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1542.42\n        },\n        {\n            \"apr\": 5.031,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 2804,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 2.25,\n            \"price\": 100.125,\n            \"rate\": 4.25,\n            \"principalAndInterest\": 1476,\n            \"rebate\": 375,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_134_149_271_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1352\",\n            \"productId\": 28774261,\n            \"productName\": \"Conforming 5/1 LIBOR ARM 2/2/5\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1475.82\n        },\n        {\n            \"apr\": 6.859,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 3179,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 3.75,\n            \"price\": 100,\n            \"rate\": 6.625,\n            \"principalAndInterest\": 1921,\n            \"rebate\": 0,\n            \"discount\": 0,\n            \"productGroupId\": \"1_128_134_149_271_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"REMN Wholesale Preferred - \",\n            \"loanType\": \"NonConforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"\",\n            \"productId\": 28801807,\n            \"productName\": \"Expanded Plus Full Doc 5/1 Libor ARM\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1920.93\n        },\n        {\n            \"apr\": 4.902,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 3179,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 2.25,\n            \"price\": 100,\n            \"rate\": 4.25,\n            \"principalAndInterest\": 1476,\n            \"rebate\": 0,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_134_149_272_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"Provident Funding – Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"A1370\",\n            \"productId\": 28774245,\n            \"productName\": \"Conforming 7/1 LIBOR ARM 5/2/5\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1475.82\n        },\n        {\n            \"apr\": 7.247,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 2579,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 4.5,\n            \"price\": 100.2,\n            \"rate\": 6.75,\n            \"principalAndInterest\": 1946,\n            \"rebate\": 600,\n            \"discount\": 0,\n            \"productGroupId\": \"1_128_134_149_272_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"NonConforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"6907\",\n            \"productId\": 28734515,\n            \"productName\": \"Non-Conforming Renew QM Jumbo 6900 Series 7/1 ARM\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1945.79\n        },\n        {\n            \"apr\": 4.974,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 2876,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 2.25,\n            \"price\": 100.101,\n            \"rate\": 4.625,\n            \"principalAndInterest\": 1542,\n            \"rebate\": 303,\n            \"discount\": 0,\n            \"productGroupId\": \"1_127_134_149_273_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"Quicken Wholesale - \",\n            \"loanType\": \"Conforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"L10\",\n            \"productId\": 28715652,\n            \"productName\": \"Conventional 10/1 ARM DU Approved\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1542.42\n        },\n        {\n            \"apr\": 7.122,\n            \"armIndex\": \"1 Year LIBOR\",\n            \"closingCost\": 2912,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 4.5,\n            \"price\": 100.089,\n            \"rate\": 6.75,\n            \"principalAndInterest\": 1946,\n            \"rebate\": 267,\n            \"discount\": 0,\n            \"productGroupId\": \"1_128_134_149_273_2_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"ARM\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"NonConforming\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"6910\",\n            \"productId\": 28734516,\n            \"productName\": \"Non-Conforming Renew QM Jumbo 6900 Series 10/1 ARM\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1945.79\n        }\n    ],\n    \"totalLoanAmountDetails\": {\n        \"totalLoanAmount\": 300000\n    },\n    \"cltv\": 0,\n    \"ltv\": 75,\n    \"hcltv\": 0,\n    \"searchId\": \"1515114887E1545094713\",\n    \"searchTime\": \"2018-12-18T00:58:33.562069Z\",\n    \"customerInternalId\": \"OBSearch\"\n}",
+                "responseCode": {
+                    "code": 200,
+                    "name": "OK"
+                },
+                "requestObject": {
+                    "data": "{\n    \"borrowerInformation\": {\n        \"assetDocumentation\": \"Verified\",\n        \"debtToIncomeRatio\": 38,\n        \"pledgedAssets\": false,\n        \"citizenship\": \"USCitizen\",\n        \"employmentDocumentation\": \"Verified\",\n        \"fico\": 760,\n        \"firstName\": \"test\",\n        \"lastName\": \"test1\",\n        \"vaFirstTimeUse\": true,\n        \"firstTimeHomeBuyer\": false,\n        \"incomeDocumentation\": \"Verified\",\n        \"monthlyIncome\": 0,\n        \"monthsReserves\": 24,\n        \"selfEmployed\": false,\n        \"waiveEscrows\": false,\n        \"mortgageLatesX30\": 0,\n        \"mortgageLatesX60\": 0,\n        \"mortgageLatesX90\": 0,\n        \"mortgageLatesX120\": 0,\n        \"mortgageLatesRolling\": 0,\n        \"bankruptcy\": \"Never\",\n        \"foreclosure\": \"Never\",\n        \"bankStatementsForIncome\": \"NotApplicable\",\n        \"state\": \"Utah\"\n    },\n    \"loanInformation\": {\n        \"loanPurpose\": \"Purchase\",\n        \"lienType\": \"First\",\n        \"amortizationTypes\": [\n            \"ARM\",\n            \"Fixed\"\n            \n        ],\n        \"armFixedTerms\": [\n            \"TenYear\",\n            \"SevenYear\",\n            \"FiveYear\",\n            \"ThreeYear\"\n        ],\n        \"automatedUnderwritingSystem\": \"NotSpecified\",\n        \"borrowerPaidMI\": \"Yes\",\n        \"buydown\": \"None\",\n        \"cashOutAmount\": 0,\n        \"desiredLockPeriod\": 0,\n        \"desiredPrice\": 0,\n        \"desiredRate\": 0,\n        \"feesIn\": \"No\",\n        \"expandedApprovalLevel\": \"NotApplicable\",\n        \"fhaCaseAssigned\": \"2017-02-06T06:00:00+00:00\",\n        \"fhaCaseEndorsement\": \"2017-02-06T06:00:00+00:00\",\n        \"interestOnly\": false,\n        \"baseLoanAmount\": 300000,\n        \"secondLienAmount\": 0,\n        \"helocDrawnAmount\": 0,\n        \"helocLineAmount\": 0,\n        \"loanTerms\": [\n            \"ThirtyYear\",\n            \"TwentyYear\",\n            \"FifteenYear\",\n            \"TenYear\"\n        ],\n        \"productTypes\": [\n            \"StandardProducts\",\n            \"AffordableProducts\"\n        ],\n        \"loanType\": \"Conforming\",\n        \"prepaymentPenalty\": \"None\",\n        \"exemptFromVAFundingFee\": false,\n        \"includeLOCompensationInPricing\": \"YesLenderPaid\",\n        \"currentServicer\": \"ACH Trust\",\n        \"calculateTotalLoanAmount\": true\n    },\n    \"propertyInformation\": {\n        \"appraisedValue\": 400000,\n        \"occupancy\": \"PrimaryResidence\",\n        \"propertyStreetAddress\": \"string\",\n        \"county\": \"Salt Lake\",\n        \"state\": \"UT\",\n        \"zipCode\": \"84020\",\n        \"propertyType\": \"SingleFamily\",\n        \"corporateRelocation\": false,\n        \"salesPrice\": 400000,\n        \"numberOfStories\": 1,\n        \"numberOfUnits\": \"OneUnit\",\n        \"construction\": false\n    },\n    \"representativeFICO\": 760,\n    \"loanLevelDebtToIncomeRatio\": 38,\n    \"customerInternalId\": \"OBSearch\"\n}",
+                    "dataMode": "raw",
+                    "headerData": [
+                        {
+                            "key": "api-version",
+                            "value": "3",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiJodHRwczovL21hcmtldHBsYWNlYXV0aC5vcHRpbWFsYmx1ZS5jb20vZDM1YWU4OTMtMjM2Ny00MGI1LWE5YjQtYmZhYjNhY2I3OTkxIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4LyIsImlhdCI6MTU0NTExNzc4NCwibmJmIjoxNTQ1MTE3Nzg0LCJleHAiOjE1NDUxMjE2ODQsImFpbyI6IjQyUmdZSWpaSk82anl5THUzbmNrMisvSTkySUxBQT09IiwiYXBwaWQiOiIwMzEzNzgzMi03M2NlLTQzYjEtYWU5OS05ZjNhMmE1OWJiMGEiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kMDAyNmY5OS1iOTgyLTQ3MjQtODJjNS1lZTAxNGY1YjYzMTgvIiwib2lkIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1Iiwicm9sZXMiOlsiTWFya2V0cGxhY2UuU3VwcG9ydC5TZXJ2aWNlcyIsIk1hcmtldHBsYWNlLlByaWNpbmcuQ29uc3VtZXIiLCJNYXJrZXRwbGFjZS5QcmljaW5nLkZ1bGwiXSwic3ViIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1IiwidGlkIjoiZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4IiwidXRpIjoiMmtLZ1NLNXAtVVdDa1pJbFZ2T0NBQSIsInZlciI6IjEuMCJ9.X1E5DnJZn-tDPbRFXbsUCVhSUzFLBYwbNjzkysO0WO08h4ugUjOacwXUxzu39vupPiYWu7f41iBV185PZa1Rv4QElIY1QEodU59qtBy1VxFW946fo8SLGup6VdVf0J7ZjZcBc1l_1_fch4wk1_GBYJHcc6pPhSpi6neHXzoRgWkSUzT29oOLOHgOcpcycP5C25Mh67Hveg_YMG6AUdfqMpnua47gh_RyoVeDO3LfbTmS956i5fNwEWZ7pTkMPnVFWeYDugjiwuUpZZnllrbmiiFvy7Z6bFgMsrcL7X_8_y6ToET9YdMRUGfDc8i4V_y0m5pBFTgRjUpWP8JyRY5NTQ",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        }
+                    ],
+                    "method": "POST",
+                    "pathVariableData": [
+                        {
+                            "key": "businessChannelId",
+                            "value": "90019",
+                            "description": "Configuration Reports > Users w/ Full Detail"
+                        },
+                        {
+                            "key": "originatorId",
+                            "value": "943018"
+                        }
+                    ],
+                    "queryParams": [],
+                    "url": "https://marketplace.optimalblue.com/full/api/businesschannels/:businessChannelId/originators/:originatorId/productgroupsearch?"
+                },
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Pragma",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Transfer-Encoding",
+                        "value": "chunked"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json; charset=utf-8"
+                    },
+                    {
+                        "key": "Content-Encoding",
+                        "value": "gzip"
+                    },
+                    {
+                        "key": "Expires",
+                        "value": "-1"
+                    },
+                    {
+                        "key": "Vary",
+                        "value": "Accept-encoding"
+                    },
+                    {
+                        "key": "api-supported-versions",
+                        "value": "3"
+                    },
+                    {
+                        "key": "api-deprecated-versions",
+                        "value": "1,2"
+                    },
+                    {
+                        "key": "Request-Context",
+                        "value": "appId=cid-v1:e9c13eb2-b984-4ae4-8cc5-84270656bbb4"
+                    },
+                    {
+                        "key": "Access-Control-Expose-Headers",
+                        "value": "Request-Context"
+                    },
+                    {
+                        "key": "X-AspNet-Version",
+                        "value": "4.0.30319"
+                    },
+                    {
+                        "key": "X-Powered-By",
+                        "value": "ASP.NET"
+                    },
+                    {
+                        "key": "Date",
+                        "value": "Tue, 18 Dec 2018 00:58:32 GMT"
+                    }
+                ],
+                "cookies": null,
+                "request": "dc0ef2bd-8f28-48a9-9bfa-d0f98cd6870d",
+                "collection": "d9cb43fd-ed0b-4910-b9ac-0f354161db62"
+            },
+            {
+                "id": "a99ad4b6-32ce-4a71-b38d-c3a86eb42c66",
+                "name": "Product Group Search - VA",
+                "status": null,
+                "mime": null,
+                "language": "json",
+                "text": "{\n    \"productGroups\": [\n        {\n            \"apr\": 4.423,\n            \"armIndex\": \"\",\n            \"closingCost\": 2425,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.261,\n            \"rate\": 4.25,\n            \"principalAndInterest\": 1494,\n            \"rebate\": 793,\n            \"discount\": 0,\n            \"productGroupId\": \"1_130_133_149_0_0_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Caliber - Wholesale - \",\n            \"loanType\": \"VA\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"VF30\",\n            \"productId\": 28784390,\n            \"productName\": \"VA 30 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1494.27\n        },\n        {\n            \"apr\": 4.49,\n            \"armIndex\": \"\",\n            \"closingCost\": 2425,\n            \"loanTerm\": \"20 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.261,\n            \"rate\": 4.25,\n            \"principalAndInterest\": 1881,\n            \"rebate\": 793,\n            \"discount\": 0,\n            \"productGroupId\": \"1_130_133_151_0_0_0\",\n            \"amortizationTerm\": \"20\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Caliber - Wholesale - \",\n            \"loanType\": \"VA\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"VF20\",\n            \"productId\": 28784359,\n            \"productName\": \"VA 20 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1880.92\n        },\n        {\n            \"apr\": 4.291,\n            \"armIndex\": \"\",\n            \"closingCost\": 2352,\n            \"loanTerm\": \"15 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.285,\n            \"rate\": 3.99,\n            \"principalAndInterest\": 2245,\n            \"rebate\": 866,\n            \"discount\": 0,\n            \"productGroupId\": \"1_130_133_152_0_0_0\",\n            \"amortizationTerm\": \"15\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Caliber - Wholesale - \",\n            \"loanType\": \"VA\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"VF15\",\n            \"productId\": 28784358,\n            \"productName\": \"VA 15 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 2245.28\n        },\n        {\n            \"apr\": 4.58,\n            \"armIndex\": \"\",\n            \"closingCost\": 2805,\n            \"loanTerm\": \"10 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.136,\n            \"rate\": 4.125,\n            \"principalAndInterest\": 3093,\n            \"rebate\": 413,\n            \"discount\": 0,\n            \"productGroupId\": \"1_130_133_153_0_0_0\",\n            \"amortizationTerm\": \"10\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"CMG Wholesale - - \",\n            \"loanType\": \"VA\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"4104\",\n            \"productId\": 28734152,\n            \"productName\": \"VA 10 Year Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 3093.4\n        }\n    ],\n    \"totalLoanAmountDetails\": {\n        \"totalLoanAmount\": 303750,\n        \"upfrontPMI_MIP_FF_GF_Percent\": 1.25,\n        \"upfrontPMI_MIP_FF_GF_Amount\": 3750,\n        \"upfrontPMI_MIP_FF_GF_PaidinCash\": 0,\n        \"upfrontPMI_MIP_FF_GF_FinancedAmount\": 3750\n    },\n    \"cltv\": 0,\n    \"ltv\": 75,\n    \"hcltv\": 0,\n    \"searchId\": \"1515174092E1545096901\",\n    \"searchTime\": \"2018-12-18T01:35:01.0307002Z\",\n    \"customerInternalId\": \"OBSearch\"\n}",
+                "responseCode": {
+                    "code": 200,
+                    "name": "OK"
+                },
+                "requestObject": {
+                    "data": "{\n    \"borrowerInformation\": {\n        \"assetDocumentation\": \"Verified\",\n        \"debtToIncomeRatio\": 38,\n        \"pledgedAssets\": false,\n        \"citizenship\": \"USCitizen\",\n        \"employmentDocumentation\": \"Verified\",\n        \"fico\": 760,\n        \"firstName\": \"test\",\n        \"lastName\": \"test1\",\n        \"vaFirstTimeUse\": true,\n        \"firstTimeHomeBuyer\": false,\n        \"incomeDocumentation\": \"Verified\",\n        \"monthlyIncome\": 0,\n        \"monthsReserves\": 24,\n        \"selfEmployed\": false,\n        \"waiveEscrows\": false,\n        \"mortgageLatesX30\": 0,\n        \"mortgageLatesX60\": 0,\n        \"mortgageLatesX90\": 0,\n        \"mortgageLatesX120\": 0,\n        \"mortgageLatesRolling\": 0,\n        \"bankruptcy\": \"Never\",\n        \"foreclosure\": \"Never\",\n        \"bankStatementsForIncome\": \"NotApplicable\",\n        \"state\": \"Utah\",\n        \"typeOfVeteran\": \"ActiveDuty\"\n    },\n    \"loanInformation\": {\n        \"loanPurpose\": \"Purchase\",\n        \"lienType\": \"First\",\n        \"amortizationTypes\": [\n            \"Fixed\"\n            \n        ],\n        \"armFixedTerms\": [\n\t\t\t\"FiveYear\"\n        ],\n        \"automatedUnderwritingSystem\": \"NotSpecified\",\n        \"borrowerPaidMI\": \"Yes\",\n        \"buydown\": \"None\",\n        \"cashOutAmount\": 0,\n        \"desiredLockPeriod\": 0,\n        \"desiredPrice\": 0,\n        \"desiredRate\": 0,\n        \"feesIn\": \"No\",\n        \"expandedApprovalLevel\": \"NotApplicable\",\n        \"fhaCaseAssigned\": \"2017-02-06T06:00:00+00:00\",\n        \"fhaCaseEndorsement\": \"2017-02-06T06:00:00+00:00\",\n        \"interestOnly\": false,\n        \"baseLoanAmount\": 300000,\n        \"secondLienAmount\": 0,\n        \"helocDrawnAmount\": 0,\n        \"helocLineAmount\": 0,\n        \"loanTerms\": [\n            \"ThirtyYear\",\n            \"TwentyYear\",\n            \"FifteenYear\",\n            \"TenYear\"\n        ],\n        \"productTypes\": [\n        \t\"StandardProducts\",\n            \"AffordableProducts\"\n        ],\n        \"loanType\": \"VA\",\n        \"prepaymentPenalty\": \"None\",\n        \"exemptFromVAFundingFee\": false,\n        \"includeLOCompensationInPricing\": \"YesLenderPaid\",\n        \"currentServicer\": \"ACH Trust\",\n        \"calculateTotalLoanAmount\": true\n    },\n    \"propertyInformation\": {\n        \"appraisedValue\": 400000,\n        \"occupancy\": \"PrimaryResidence\",\n        \"propertyStreetAddress\": \"string\",\n        \"county\": \"Salt Lake\",\n        \"state\": \"UT\",\n        \"zipCode\": \"84020\",\n        \"propertyType\": \"SingleFamily\",\n        \"corporateRelocation\": false,\n        \"salesPrice\": 400000,\n        \"numberOfStories\": 1,\n        \"numberOfUnits\": \"OneUnit\",\n        \"construction\": false\n    },\n    \"representativeFICO\": 760,\n    \"loanLevelDebtToIncomeRatio\": 38,\n    \"customerInternalId\": \"OBSearch\"\n}",
+                    "dataMode": "raw",
+                    "headerData": [
+                        {
+                            "key": "api-version",
+                            "value": "3",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiJodHRwczovL21hcmtldHBsYWNlYXV0aC5vcHRpbWFsYmx1ZS5jb20vZDM1YWU4OTMtMjM2Ny00MGI1LWE5YjQtYmZhYjNhY2I3OTkxIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4LyIsImlhdCI6MTU0NTA5Mzg2MywibmJmIjoxNTQ1MDkzODYzLCJleHAiOjE1NDUwOTc3NjMsImFpbyI6IjQyUmdZSGc3VWF4emFhemlrVVdYRnpzNXgzK1VBUUE9IiwiYXBwaWQiOiIwMzEzNzgzMi03M2NlLTQzYjEtYWU5OS05ZjNhMmE1OWJiMGEiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kMDAyNmY5OS1iOTgyLTQ3MjQtODJjNS1lZTAxNGY1YjYzMTgvIiwib2lkIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1Iiwicm9sZXMiOlsiTWFya2V0cGxhY2UuU3VwcG9ydC5TZXJ2aWNlcyIsIk1hcmtldHBsYWNlLlByaWNpbmcuQ29uc3VtZXIiLCJNYXJrZXRwbGFjZS5QcmljaW5nLkZ1bGwiXSwic3ViIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1IiwidGlkIjoiZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4IiwidXRpIjoiY21OX29qQmZia2VwbUNrXzQwUjFBQSIsInZlciI6IjEuMCJ9.GFfL6LG2vKeGUjdwXuKS5SeXr8GgLiWU2J-mNTgqN5j2FSNtyzCAWKn3JPPvVL-TDQ-lrUnfijWz8Ljq_D38FJzoPAf2Ywt5wTJ3MqZAyYCsqZy8pG-ELpE1N3Qhv87x5bqNk5yQh91O7LoLm2KbXuJozoNzuoDfosXOxVsYek8rb_BGdhfMl2bOQMQdve0aFs0LBklQZReHbtodfiQdw5yLjegVnH51K6yS00HoODaZEe6QL4P0Y4IoSfswly4I8LNUmlREXm5WGjyinoS1y7C83KVrygKxr27VbinEFIs2SmX3fipQJVCl-PcSGcfpnmYW5dUoEus9DiG5aNLPwQ",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        }
+                    ],
+                    "method": "POST",
+                    "pathVariableData": [
+                        {
+                            "key": "businessChannelId",
+                            "value": "90019",
+                            "description": "Configuration Reports > Users w/ Full Detail"
+                        },
+                        {
+                            "key": "originatorId",
+                            "value": "943018"
+                        }
+                    ],
+                    "queryParams": [],
+                    "url": "https://marketplace.optimalblue.com/full/api/businesschannels/:businessChannelId/originators/:originatorId/productgroupsearch?"
+                },
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Pragma",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Transfer-Encoding",
+                        "value": "chunked"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json; charset=utf-8"
+                    },
+                    {
+                        "key": "Content-Encoding",
+                        "value": "gzip"
+                    },
+                    {
+                        "key": "Expires",
+                        "value": "-1"
+                    },
+                    {
+                        "key": "Vary",
+                        "value": "Accept-encoding"
+                    },
+                    {
+                        "key": "api-supported-versions",
+                        "value": "3"
+                    },
+                    {
+                        "key": "api-deprecated-versions",
+                        "value": "1,2"
+                    },
+                    {
+                        "key": "Request-Context",
+                        "value": "appId=cid-v1:e9c13eb2-b984-4ae4-8cc5-84270656bbb4"
+                    },
+                    {
+                        "key": "Access-Control-Expose-Headers",
+                        "value": "Request-Context"
+                    },
+                    {
+                        "key": "X-AspNet-Version",
+                        "value": "4.0.30319"
+                    },
+                    {
+                        "key": "X-Powered-By",
+                        "value": "ASP.NET"
+                    },
+                    {
+                        "key": "Date",
+                        "value": "Tue, 18 Dec 2018 01:35:00 GMT"
+                    }
+                ],
+                "cookies": null,
+                "request": "dc0ef2bd-8f28-48a9-9bfa-d0f98cd6870d",
+                "collection": "d9cb43fd-ed0b-4910-b9ac-0f354161db62"
+            },
+            {
+                "id": "edb5b7ab-adf4-423f-8d75-70d3646ae01c",
+                "name": "VA",
+                "status": null,
+                "mime": null,
+                "language": "json",
+                "text": "{\n    \"productGroups\": [\n        {\n            \"apr\": 4.298,\n            \"armIndex\": \"\",\n            \"closingCost\": 2462,\n            \"loanTerm\": \"30 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.249,\n            \"rate\": 4.125,\n            \"principalAndInterest\": 1472,\n            \"rebate\": 756,\n            \"discount\": 0,\n            \"productGroupId\": \"1_130_133_149_0_0_0\",\n            \"amortizationTerm\": \"30\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Orion Lending - Wholesale - \",\n            \"loanType\": \"VA\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"VF30 FUEL\",\n            \"productId\": 28783925,\n            \"productName\": \"VA 30 Yr Fixed Fuel\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 1472.12\n        },\n        {\n            \"apr\": 4.189,\n            \"armIndex\": \"\",\n            \"closingCost\": 2863,\n            \"loanTerm\": \"15 Yr\",\n            \"lockPeriod\": 30,\n            \"armMargin\": 0,\n            \"price\": 100.117,\n            \"rate\": 3.875,\n            \"principalAndInterest\": 2228,\n            \"rebate\": 355,\n            \"discount\": 0,\n            \"productGroupId\": \"1_130_133_152_0_0_0\",\n            \"amortizationTerm\": \"15\",\n            \"amortizationType\": \"Fixed\",\n            \"investor\": \"Caliber - Wholesale - \",\n            \"loanType\": \"VA\",\n            \"priceStatus\": \"Expired\",\n            \"pendingUpdate\": false,\n            \"productCode\": \"VF15\",\n            \"productId\": 28784358,\n            \"productName\": \"VA 15 Yr Fixed\",\n            \"monthlyMI\": 0,\n            \"totalPayment\": 2227.82\n        }\n    ],\n    \"totalLoanAmountDetails\": {\n        \"totalLoanAmount\": 303750,\n        \"upfrontPMI_MIP_FF_GF_Percent\": 1.25,\n        \"upfrontPMI_MIP_FF_GF_Amount\": 3750,\n        \"upfrontPMI_MIP_FF_GF_PaidinCash\": 0,\n        \"upfrontPMI_MIP_FF_GF_FinancedAmount\": 3750\n    },\n    \"cltv\": 0,\n    \"ltv\": 75,\n    \"hcltv\": 0,\n    \"searchId\": \"1517122025E1545265553\",\n    \"searchTime\": \"2018-12-20T00:25:53.0716315Z\"\n}",
+                "responseCode": {
+                    "code": 200,
+                    "name": "OK"
+                },
+                "requestObject": {
+                    "data": "{\n    \"borrowerInformation\": {\n        \"assetDocumentation\": \"Verified\",\n        \"pledgedAssets\": false,\n        \"citizenship\": \"USCitizen\",\n        \"employmentDocumentation\": \"Verified\",\n        \"firstTimeHomeBuyer\": false,\n        \"incomeDocumentation\": \"Verified\",\n        \"vaFirstTimeUse\": true,\n        \"typeOfVeteran\": \"ActiveDuty\",\n        \"monthsReserves\": 24,\n        \"selfEmployed\": false,\n        \"waiveEscrows\": false,\n        \"mortgageLatesX30\": 0,\n        \"mortgageLatesX60\": 0,\n        \"mortgageLatesX90\": 0,\n        \"mortgageLatesX120\": 0,\n        \"mortgageLatesRolling\": 0,\n        \"bankruptcy\": \"Never\",\n        \"foreclosure\": \"Never\"\n\n    },\n    \"loanInformation\": {\n        \"loanPurpose\": \"Purchase\",\n        \"lienType\": \"First\",\n        \"amortizationTypes\": [\n            \"Fixed\"\n        ],\n        \"armFixedTerms\": \"\",\n        \"automatedUnderwritingSystem\": \"NotSpecified\",\n        \"borrowerPaidMI\": \"Yes\",\n        \"buydown\": \"None\",\n        \"feesIn\": \"No\",\n        \"expandedApprovalLevel\": \"NotApplicable\",\n        \"fhaCaseAssigned\": \"2017-02-06T06:00:00+00:00\",\n        \"fhaCaseEndorsement\": \"2017-02-06T06:00:00+00:00\",\n        \"interestOnly\": false,\n        \"baseLoanAmount\": 300000,\n        \"loanTerms\": [\n            \"ThirtyYear\",\n            \"FifteenYear\"\n        ],\n        \"productTypes\": [\n            \"StandardProducts\",\n            \"AffordableProducts\"\n        ],\n        \"loanType\": \"VA\",\n        \"prepaymentPenalty\": \"None\",\n        \"exemptFromVAFundingFee\": false,\n        \"includeLOCompensationInPricing\": \"YesLenderPaid\",\n        \"currentServicer\": \"ACH Trust\",\n        \"calculateTotalLoanAmount\": true\n    },\n    \"propertyInformation\": {\n        \"appraisedValue\": 400000,\n        \"occupancy\": \"PrimaryResidence\",\n        \"county\": \"Salt Lake\",\n        \"state\": \"UT\",\n        \"zipCode\": \"84020\",\n        \"propertyType\": \"SingleFamily\",\n        \"corporateRelocation\": false,\n        \"salesPrice\": 400000,\n        \"numberOfStories\": 1,\n        \"numberOfUnits\": \"OneUnit\",\n        \"construction\": false\n    },\n    \"representativeFICO\": 760,\n    \"loanLevelDebtToIncomeRatio\": 38\n}",
+                    "dataMode": "raw",
+                    "headerData": [
+                        {
+                            "key": "api-version",
+                            "value": "3",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        },
+                        {
+                            "key": "Authorization",
+                            "value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiJodHRwczovL21hcmtldHBsYWNlYXV0aC5vcHRpbWFsYmx1ZS5jb20vZDM1YWU4OTMtMjM2Ny00MGI1LWE5YjQtYmZhYjNhY2I3OTkxIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4LyIsImlhdCI6MTU0NTI2MzU3NCwibmJmIjoxNTQ1MjYzNTc0LCJleHAiOjE1NDUyNjc0NzQsImFpbyI6IjQyUmdZTkRNWXZhOFdYdWxZL2ZDak5WS1o4dXZBZ0E9IiwiYXBwaWQiOiIwMzEzNzgzMi03M2NlLTQzYjEtYWU5OS05ZjNhMmE1OWJiMGEiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kMDAyNmY5OS1iOTgyLTQ3MjQtODJjNS1lZTAxNGY1YjYzMTgvIiwib2lkIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1Iiwicm9sZXMiOlsiTWFya2V0cGxhY2UuU3VwcG9ydC5TZXJ2aWNlcyIsIk1hcmtldHBsYWNlLlByaWNpbmcuQ29uc3VtZXIiLCJNYXJrZXRwbGFjZS5QcmljaW5nLkZ1bGwiXSwic3ViIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1IiwidGlkIjoiZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4IiwidXRpIjoiOUdKcTR6UmNZRUNGY3I2ajZoWXNBQSIsInZlciI6IjEuMCJ9.ujPbBTadLsHA3BecI2v_HYAJIRu7AMU_IzlIh1wQ7gZeIj7NDNktndQ01nQx7MOXtKlIxjTr20jDD9B5y2eE8yuCnJEjUA_-LePF39Lt4vtR4fzyicPfS_ecXF9e3tly1VJsUi4ZE8td2XHKBj3pBcddYbrACU93z90Vrc58l-D2ScexD9iCXzAt6KnDtVURGpgNtzHN0_l4tfPUpygsVx3d0PVkHGOvTiBI9zQxXtiZJz9Ar49518rvliOSEAfJ-WBkElySHXQ_KlJ1C-jN7wgNu_zBy3eiYYOB4pbHCuC_XIorBIiHHwKw9GmxSHGb7UFJCtnvywp-DpG4x3BBTw",
+                            "description": "",
+                            "type": "text",
+                            "enabled": true
+                        }
+                    ],
+                    "method": "POST",
+                    "pathVariableData": [
+                        {
+                            "key": "businessChannelId",
+                            "value": "90019",
+                            "description": "Configuration Reports > Users w/ Full Detail"
+                        },
+                        {
+                            "key": "originatorId",
+                            "value": "943018"
+                        }
+                    ],
+                    "queryParams": [],
+                    "url": "https://marketplace.optimalblue.com/full/api/businesschannels/:businessChannelId/originators/:originatorId/productgroupsearch?"
+                },
+                "headers": [
+                    {
+                        "key": "Cache-Control",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Pragma",
+                        "value": "no-cache"
+                    },
+                    {
+                        "key": "Transfer-Encoding",
+                        "value": "chunked"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json; charset=utf-8"
+                    },
+                    {
+                        "key": "Content-Encoding",
+                        "value": "gzip"
+                    },
+                    {
+                        "key": "Expires",
+                        "value": "-1"
+                    },
+                    {
+                        "key": "Vary",
+                        "value": "Accept-encoding"
+                    },
+                    {
+                        "key": "api-supported-versions",
+                        "value": "3"
+                    },
+                    {
+                        "key": "api-deprecated-versions",
+                        "value": "1,2"
+                    },
+                    {
+                        "key": "Request-Context",
+                        "value": "appId=cid-v1:e9c13eb2-b984-4ae4-8cc5-84270656bbb4"
+                    },
+                    {
+                        "key": "Access-Control-Expose-Headers",
+                        "value": "Request-Context"
+                    },
+                    {
+                        "key": "X-AspNet-Version",
+                        "value": "4.0.30319"
+                    },
+                    {
+                        "key": "X-Powered-By",
+                        "value": "ASP.NET"
+                    },
+                    {
+                        "key": "Date",
+                        "value": "Thu, 20 Dec 2018 00:25:52 GMT"
+                    }
+                ],
+                "cookies": null,
+                "request": "dc0ef2bd-8f28-48a9-9bfa-d0f98cd6870d",
+                "collection": "d9cb43fd-ed0b-4910-b9ac-0f354161db62"
+            }
+        ],
+        "currentHelper": null,
+        "helperAttributes": null,
+        "collectionId": "d9cb43fd-ed0b-4910-b9ac-0f354161db62",
+        "rawModeData": "{\n    \"borrowerInformation\": {\n        \"assetDocumentation\": \"Verified\",\n        \"pledgedAssets\": false,\n        \"citizenship\": \"USCitizen\",\n        \"employmentDocumentation\": \"Verified\",\n        \"firstTimeHomeBuyer\": false,\n        \"incomeDocumentation\": \"Verified\",\n        \"monthsReserves\": 24,\n        \"selfEmployed\": false,\n        \"waiveEscrows\": false,\n        \"mortgageLatesX30\": 0,\n        \"mortgageLatesX60\": 0,\n        \"mortgageLatesX90\": 0,\n        \"mortgageLatesX120\": 0,\n        \"mortgageLatesRolling\": 0,\n        \"bankruptcy\": \"Never\",\n        \"foreclosure\": \"Never\"\n    },\n    \"loanInformation\": {\n        \"loanPurpose\": \"Purchase\",\n        \"lienType\": \"First\",\n        \"amortizationTypes\": [\n            \"ARM\",\n            \"Fixed\"\n        ],\n        \"armFixedTerms\": [\n            \"TenYear\"\n        ],\n        \"automatedUnderwritingSystem\": \"NotSpecified\",\n        \"borrowerPaidMI\": \"Yes\",\n        \"buydown\": \"None\",\n        \"feesIn\": \"No\",\n        \"expandedApprovalLevel\": \"NotApplicable\",\n        \"fhaCaseAssigned\": \"2017-02-06T06:00:00+00:00\",\n        \"fhaCaseEndorsement\": \"2017-02-06T06:00:00+00:00\",\n        \"interestOnly\": false,\n        \"baseLoanAmount\": 300000,\n        \"loanTerms\": [\n            \"ThirtyYear\",\n            \"TwentyYear\"\n        ],\n        \"productTypes\": [\n            \"StandardProducts\",\n            \"AffordableProducts\"\n        ],\n        \"loanType\": \"Conforming\",\n        \"prepaymentPenalty\": \"None\",\n        \"includeLOCompensationInPricing\": \"YesLenderPaid\",\n        \"currentServicer\": \"ACH Trust\",\n        \"calculateTotalLoanAmount\": true\n    },\n    \"propertyInformation\": {\n        \"appraisedValue\": 400000,\n        \"occupancy\": \"PrimaryResidence\",\n        \"county\": \"Salt Lake\",\n        \"state\": \"UT\",\n        \"zipCode\": \"84020\",\n        \"propertyType\": \"SingleFamily\",\n        \"corporateRelocation\": false,\n        \"salesPrice\": 400000,\n        \"numberOfStories\": 1,\n        \"numberOfUnits\": \"OneUnit\",\n        \"construction\": false\n    },\n    \"representativeFICO\": 760,\n    \"loanLevelDebtToIncomeRatio\": 38\n}",
+        "headers": "api-version: 3\nContent-Type: application/json\nAuthorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSIsImtpZCI6Im5iQ3dXMTF3M1hrQi14VWFYd0tSU0xqTUhHUSJ9.eyJhdWQiOiJodHRwczovL21hcmtldHBsYWNlYXV0aC5vcHRpbWFsYmx1ZS5jb20vZDM1YWU4OTMtMjM2Ny00MGI1LWE5YjQtYmZhYjNhY2I3OTkxIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4LyIsImlhdCI6MTU0NTk3Mjc1NCwibmJmIjoxNTQ1OTcyNzU0LCJleHAiOjE1NDU5NzY2NTQsImFpbyI6IjQyUmdZTGlZVnVZMWZhc2FGNWZuM3owV3BiRWJBQT09IiwiYXBwaWQiOiIwMzEzNzgzMi03M2NlLTQzYjEtYWU5OS05ZjNhMmE1OWJiMGEiLCJhcHBpZGFjciI6IjEiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kMDAyNmY5OS1iOTgyLTQ3MjQtODJjNS1lZTAxNGY1YjYzMTgvIiwib2lkIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1Iiwicm9sZXMiOlsiTWFya2V0cGxhY2UuU3VwcG9ydC5TZXJ2aWNlcyIsIk1hcmtldHBsYWNlLlByaWNpbmcuQ29uc3VtZXIiLCJNYXJrZXRwbGFjZS5QcmljaW5nLkZ1bGwiXSwic3ViIjoiNWRlOGExMmEtMDkyOS00NmIwLWE4Y2QtM2ZiODA4YWM1YTI1IiwidGlkIjoiZDAwMjZmOTktYjk4Mi00NzI0LTgyYzUtZWUwMTRmNWI2MzE4IiwidXRpIjoibXhfUnFlSmRUMG1CUGZtWDB6bzVBQSIsInZlciI6IjEuMCJ9.szaUdIJVVlPwPpsA4mIaofrNJX5PuDwo_nUFvSI4Tc9JjdYvprrJa36Us-OaCaDsMqJZhBirrlecORyyNr_4aNkdcvphjX1NaT0r5F1UShFMePuv7VxXDbQaHnCrlpgr19j8YEArdxzYR-KWb-ij3J1DbtzxL5CJTpAmT37c8K6_7xksOLGu-IOAMVMb4dnaaFng3451_wIogTVO1p4pGBP1CD4Q4B6LvFq4AIfepgxtVVvrCy9IHql6SexDXiQxebf2TK6vCNrz6x4ERqyzmmaZDeS28TBUOPBJBGkPwO1ZtEx7o00W5vYREwplCzhp1AKG_Of6zv73M6_8pADWxQ\n",
+        "pathVariables": {
+            "businessChannelId": "90019",
+            "originatorId": "943018"
+        }
+    }
+]

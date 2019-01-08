@@ -54,6 +54,9 @@ module.exports = {
         // This is the recursive function that does the actual calculations 
         let mortgageAmount = logic.pmt(rate, nper, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit, years, credit })
 
+
+
+        
         //Preparing Final Number to be Returned
         mortgageAmount = Math.round(mortgageAmount)
         console.log(Math.round(mortgageAmount))

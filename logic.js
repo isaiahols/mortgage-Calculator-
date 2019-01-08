@@ -28,6 +28,12 @@ const logic = {
         return maxPayment;
     },
 
+    findRate: async (userRate)=>{
+        // const rate = await axios.get('https://www.getpostman.com/collections/65e3d9e6aa96e2e64909')
+
+        return userRate|| rate
+    },
+
     rateConverter: (rate) => {
         return (rate / 100) / 12
     },
@@ -99,6 +105,10 @@ const logic = {
     findLTV: (maxValue, downPmt) => {
         let ltv = maxValue / (maxValue + (downPmt * 1));
         ltv = (ltv * 100).toFixed(2)
+        if(ltv>97){
+            console.log('LTV is too high');
+            
+        }
 
         return ltv;
     },
