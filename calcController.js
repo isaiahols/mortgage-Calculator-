@@ -12,15 +12,14 @@ const logic = require('./logic');
 // mi = .0053,
 // ltv = 93.11;
 
-
 module.exports = {
-    mortCalc: (req, res) => {
+    mortCalc: async (req, res) => {
         console.log(`we've been hit!!!`)
         // if (req.res) {
         //     console.log(req.res);
 
         // }
-
+        logic.getRate()
         const {
             downPmt,
             county,
@@ -41,7 +40,7 @@ module.exports = {
             rate,
         } = req.body;
         console.log('rate', rate)
-        const r = logic.findRate(rate)
+        const r = await logic.findRate(rate)
         const maxPmt = logic.maxPmt(monthlyIncome, debts, alimony, childSupport, childCareVA, hoa);
         const countyLimit = logic.findCountyLimit(state, county, loanType);
         const taxRate = logic.findTaxRate(state, county);
@@ -67,9 +66,9 @@ module.exports = {
         mortgageAmount = Math.round(mortgageAmount)
         console.log(Math.round(mortgageAmount))
 
-        const messagesAdded = logic.addMessages()
+        const messagesAdded = logic.addMessages(mortgageAmount, countyLimit, downPmt, ltv)
 
-            res.status(200).send({ mortgageAmount, message: 'Here is your answer' })
+        res.status(200).send({ mortgageAmount, message: 'Here is your answer' })
     },
     data: (req, res) => {
         res.status(200).send('here is some data')

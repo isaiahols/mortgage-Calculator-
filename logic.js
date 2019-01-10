@@ -3,11 +3,11 @@ const miTable = require('./dataTables/miTable.json');
 const taxInsurance = require('./dataTables/taxInsurance.json');
 const loanLimits = require('./dataTables/loanLimits.json');
 
-// let rate = 
+let rates = 4
 
 const logic = {
     pv: (rate, nper, pmt) => {
-        console.log('rate',rate)
+        console.log('rate', rate)
         let r = (rate / 100) / 12
         let n = nper * 12
         let pValue = (pmt * (1 - Math.pow(1 + r, -n))) / r;
@@ -30,11 +30,18 @@ const logic = {
         return maxPayment;
     },
 
-    findRate: async (userRate) => {
-
-        // const rate = await axios.get('https://www.getpostman.com/collections/65e3d9e6aa96e2e64909')
+    findRate: (userRate, get) => {
         const rate = 4
+        if (get) {
+
+        }
         return userRate || rate
+    },
+
+    getRate: () => {
+        // rates = await axios.get('https://www.getpostman.com/collections/65e3d9e6aa96e2e64909')
+        console.log('rates', rates)
+        return rates
     },
 
     rateConverter: (rate) => {
@@ -178,10 +185,14 @@ const logic = {
 
         // console.log(' --- ')
         return logic.pmt(rate, nper, newerPV, max, extra, count)
-        return logic.pmt(rate, nper, newerPV, max, extra, count)
     },
-    addMessages: (maxFinal, maxCounty,  ) => {
-        
+    addMessages: (maxFinal, maxCounty, downPmt, ltv) => {
+        let message = '';
+        if (ltv > 97) {
+            messages = 'Down Payment is to small'
+        } else if (maxFinal - downPmt === maxCounty) {
+            message = 'You have reached the county limit'
+        }
     },
 };
 
