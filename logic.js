@@ -3,9 +3,11 @@ const miTable = require('./dataTables/miTable.json');
 const taxInsurance = require('./dataTables/taxInsurance.json');
 const loanLimits = require('./dataTables/loanLimits.json');
 
+// let rate = 
 
 const logic = {
     pv: (rate, nper, pmt) => {
+        console.log('rate',rate)
         let r = (rate / 100) / 12
         let n = nper * 12
         let pValue = (pmt * (1 - Math.pow(1 + r, -n))) / r;
@@ -21,17 +23,18 @@ const logic = {
         return (dp / .03) - dp
     },
 
-    maxPmt: (income, debts, alimony, childSupport, childCareVA, hoa) => {
-        const combinedRatio = .45;
+    maxPmt: (income, debts, alimony, childSupport, childCareVA, hoa, type) => {
+        const combinedRatio = (type === 'Conv.' || type === 'Jumbo') ? .45 : .5;
         const maxPayment = (combinedRatio * income) - (debts + alimony + childSupport + childCareVA + hoa);
         console.log("maxPayment", maxPayment)
         return maxPayment;
     },
 
-    findRate: async (userRate)=>{
-        // const rate = await axios.get('https://www.getpostman.com/collections/65e3d9e6aa96e2e64909')
+    findRate: async (userRate) => {
 
-        return userRate|| rate
+        // const rate = await axios.get('https://www.getpostman.com/collections/65e3d9e6aa96e2e64909')
+        const rate = 4
+        return userRate || rate
     },
 
     rateConverter: (rate) => {
@@ -105,9 +108,9 @@ const logic = {
     findLTV: (maxValue, downPmt) => {
         let ltv = maxValue / (maxValue + (downPmt * 1));
         ltv = (ltv * 100).toFixed(2)
-        if(ltv>97){
+        if (ltv > 97) {
             console.log('LTV is too high');
-            
+
         }
 
         return ltv;
@@ -175,6 +178,10 @@ const logic = {
 
         // console.log(' --- ')
         return logic.pmt(rate, nper, newerPV, max, extra, count)
+        return logic.pmt(rate, nper, newerPV, max, extra, count)
+    },
+    addMessages: (maxFinal, maxCounty,  ) => {
+        
     },
 };
 

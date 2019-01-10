@@ -19,7 +19,7 @@ app.use(express.json())
 
 // GET
 
-app.get('/api/calc', cc.mortCalc); 
+app.get('/api/calc',cc.checkBody, cc.mortCalc); 
 app.get('/api/data', cc.data);
 
 
