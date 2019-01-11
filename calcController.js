@@ -39,9 +39,9 @@ module.exports = {
             hoa,
             rate,
         } = req.body;
-        console.log('rate', rate)
+        // console.log('rate', rate)
         const r = await logic.findRate(rate)
-        const maxPmt = logic.maxPmt(monthlyIncome, debts, alimony, childSupport, childCareVA, hoa);
+        const maxPmt = logic.maxPmt(monthlyIncome, debts, alimony, childSupport, childCareVA, hoa, loanType);
         const countyLimit = logic.findCountyLimit(state, county, loanType);
         const taxRate = logic.findTaxRate(state, county);
         const insureRate = logic.findInsuranceRate(state);
@@ -75,22 +75,11 @@ module.exports = {
     },
     checkBody: (req, res, next) => {
         const {
-            downPmt,
             county,
             state,
             credit,
             years,
             loanType,
-            monthlyIncome,
-            debts,
-            alimony,
-            childSupport,
-            childCareVA,
-            vet,
-            vetType,
-            vetUse,
-            vetDisability,
-            hoa,
         } = req.body;
 
         if (

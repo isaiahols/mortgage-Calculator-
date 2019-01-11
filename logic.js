@@ -11,7 +11,6 @@ const logic = {
         let r = (rate / 100) / 12
         let n = nper * 12
         let pValue = (pmt * (1 - Math.pow(1 + r, -n))) / r;
-        // console.log(pValue)
         return pValue;
     },
 
@@ -24,6 +23,7 @@ const logic = {
     },
 
     maxPmt: (income, debts, alimony, childSupport, childCareVA, hoa, type) => {
+        console.log(type)
         const combinedRatio = (type === 'Conv.' || type === 'Jumbo') ? .45 : .5;
         const maxPayment = (combinedRatio * income) - (debts + alimony + childSupport + childCareVA + hoa);
         console.log("maxPayment", maxPayment)
@@ -48,7 +48,7 @@ const logic = {
         return (rate / 100) / 12
     },
 
-    nperConverter: nper => {
+    nperConverter: (nper) => {
         return nper * 12
     },
 
@@ -187,7 +187,7 @@ const logic = {
         return logic.pmt(rate, nper, newerPV, max, extra, count)
     },
     addMessages: (maxFinal, maxCounty, downPmt, ltv) => {
-        let message = '';
+        let message = 'Here are your results';
         if (ltv > 97) {
             messages = 'Down Payment is to small'
         } else if (maxFinal - downPmt === maxCounty) {
