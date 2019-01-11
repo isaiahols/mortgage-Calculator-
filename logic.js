@@ -193,6 +193,7 @@ const logic = {
         } else if (maxFinal - downPmt === maxCounty) {
             message = 'You have reached the county limit'
         }
+        return message
     },
 };
 

@@ -68,7 +68,7 @@ module.exports = {
 
         const messagesAdded = logic.addMessages(mortgageAmount, countyLimit, downPmt, ltv)
 
-        res.status(200).send({ mortgageAmount, message: 'Here is your answer' })
+        res.status(200).send({ mortgageAmount, message: messagesAdded })
     },
     data: (req, res) => {
         res.status(200).send('here is some data')
