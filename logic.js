@@ -23,10 +23,8 @@ const logic = {
     },
 
     maxPmt: (income, debts, alimony, childSupport, childCareVA, hoa, type) => {
-        console.log(type)
         const combinedRatio = (type === 'Conv.' || type === 'Jumbo') ? .45 : .5;
         const maxPayment = (combinedRatio * income) - (debts + alimony + childSupport + childCareVA + hoa);
-        console.log("maxPayment", maxPayment)
         return maxPayment;
     },
 
@@ -80,7 +78,7 @@ const logic = {
             }
         })
 
-        const ltvFiltered = creditFiltered.find(e => {
+        let ltvFiltered = creditFiltered.find(e => {
             const ltvRange = e["LTV Range"].split('');
 
             let upperLimit = ltvRange.slice(6).join('') * 1;
@@ -91,10 +89,23 @@ const logic = {
             }
         })
 
+
+        const middleData = {
+            "Credit": "640–659",
+            "LTV Range": "80.01-85",
+            "Credit ": {
+                " LTV": "640–659 & 80.01-85"
+            },
+            "> 20 yr": "0.40%",
+            "<= 20 yr": "0.25%"
+        }
+
+        ltvFiltered = ltvFiltered || middleData;
+
         let rate = years <= 20 ? ltvFiltered["<= 20 yr"] : ltvFiltered["> 20 yr"];
         rate = rate.slice(0, 4) / 100
 
-        return rate
+        return rate || "0.40"
     },
 
     findCountyLimit: (state, county, type) => {
@@ -112,12 +123,17 @@ const logic = {
         return limit
     },
 
-    findLTV: (maxValue, downPmt) => {
-        let ltv = maxValue / (maxValue + (downPmt * 1));
+    findLTV: (maxValue, downPmt, last) => {
+        let ltv = 0;
+        if (last) {
+            ltv = (maxValue - downPmt * 1) / maxValue
+        } else {
+            ltv = maxValue / (maxValue + (downPmt * 1));
+        }
+
         ltv = (ltv * 100).toFixed(2)
         if (ltv > 97) {
-            console.log('LTV is too high');
-
+            console.log('LTV is too high', ltv);
         }
 
         return ltv;
@@ -187,9 +203,10 @@ const logic = {
         return logic.pmt(rate, nper, newerPV, max, extra, count)
     },
     addMessages: (maxFinal, maxCounty, downPmt, ltv) => {
+
         let message = 'Here are your results';
         if (ltv > 97) {
-            messages = 'Down Payment is to small'
+            message = 'Down Payment is to small'
         } else if (maxFinal - downPmt === maxCounty) {
             message = 'You have reached the county limit'
         }

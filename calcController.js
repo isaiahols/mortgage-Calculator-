@@ -53,7 +53,7 @@ module.exports = {
         // This is the max value
         const maxValue = Math.min(maxValueRatio, countyLimit, maxValueDP);
         // find LTV estimate based on max value 
-        const ltv = logic.findLTV(maxValue, downPmt);
+        let ltv = logic.findLTV(maxValue, downPmt);
         const mi = logic.findMI(credit, ltv, years);
 
         // This is the recursive function that does the actual calculations 
@@ -65,6 +65,10 @@ module.exports = {
         //Preparing Final Number to be Returned
         mortgageAmount = Math.round(mortgageAmount)
         console.log(Math.round(mortgageAmount))
+
+
+        ltv = logic.findLTV(mortgageAmount, downPmt, true)
+
 
         const messagesAdded = logic.addMessages(mortgageAmount, countyLimit, downPmt, ltv)
 
