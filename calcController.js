@@ -59,7 +59,7 @@ module.exports = {
         // This is the recursive function that does the actual calculations 
         let mortgageAmountData = logic.pmt(r, years, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit, years, credit })
 
-        let { finalAmt: maxHomeValue } = mortgageAmountData;
+        let { finalAmt: maxHomeValue, compare: monthlyPayment } = mortgageAmountData;
 
 
 
@@ -72,6 +72,7 @@ module.exports = {
 
         const extraData = logic.findReturnData(maxHomeValue, downPmt, credit, state, years)
         const messagesAdded = logic.addMessages(maxHomeValue, countyLimit, downPmt, ltv)
+        extraData.monthlyPayment = monthlyPayment;
 
         res.status(200).send({ maxHomeValue, message: messagesAdded, extraData })
     },
@@ -117,7 +118,8 @@ module.exports = {
                     "vetDisability": false,
                     "hoa": 0,
                     "rate": 0
-                }
+                },
+                loanTypes: ["FHA", "Conv.", "Jumbo", "VA"]
             }
 
             res.status(403).send(message)
