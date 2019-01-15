@@ -57,22 +57,23 @@ module.exports = {
         const mi = logic.findMI(credit, ltv, years);
 
         // This is the recursive function that does the actual calculations 
-        let mortgageAmount = logic.pmt(r, years, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit, years, credit })
+        let mortgageAmountData = logic.pmt(r, years, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit, years, credit })
 
+        let { finalAmt: maxHomeValue } = mortgageAmountData;
 
 
 
         //Preparing Final Number to be Returned
-        mortgageAmount = Math.round(mortgageAmount)
-        console.log(Math.round(mortgageAmount))
+        maxHomeValue = Math.round(maxHomeValue)
+        console.log(Math.round(maxHomeValue))
 
 
-        ltv = logic.findLTV(mortgageAmount, downPmt, true)
+        ltv = logic.findLTV(maxHomeValue, downPmt, true)
 
+        const extraData = logic.findReturnData(maxHomeValue, downPmt, credit, state, years)
+        const messagesAdded = logic.addMessages(maxHomeValue, countyLimit, downPmt, ltv)
 
-        const messagesAdded = logic.addMessages(mortgageAmount, countyLimit, downPmt, ltv)
-
-        res.status(200).send({ mortgageAmount, message: messagesAdded })
+        res.status(200).send({ maxHomeValue, message: messagesAdded, extraData })
     },
     data: (req, res) => {
         res.status(200).send('here is some data')

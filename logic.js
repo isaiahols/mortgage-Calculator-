@@ -194,13 +194,35 @@ const logic = {
             console.log('count', count)
             if (pv > extra.countyLimit) {
                 console.log('County Limit is the best you can do')
-                return extra.countyLimit + extra.downPmt
+                const finalAmt = extra.countyLimit + extra.downPmt
+                return { finalAmt, compare }
             }
-            return newerPV + extra.downPmt
+            const finalAmt = newerPV + extra.downPmt
+            return { finalAmt, compare }
         }
 
         // console.log(' --- ')
         return logic.pmt(rate, nper, newerPV, max, extra, count)
+    },
+    findReturnData: (maxValue, downPmt, credit, state, years) => {
+        const ltv = logic.findLTV(maxValue, downPmt, true)
+        const insureRate = logic.findInsuranceRate(state)
+        const mi = logic.findMI(credit, ltv, years)
+        const taxRate = logic.findTaxRate(state)
+        const interestRate = logic.findRate()
+
+        // return P&I payment, 
+        const pIPayment = (maxValue - downPmt) * (1 + interestRate * .01)
+        // taxes and insurance
+        const taxes = maxValue * taxRate;
+        const insurance = (maxValue - downPmt) * insureRate;
+        //mortgage insurance
+        const mortgageInsur = (maxValue - downPmt) * mi;
+
+        const mortgageAmount = (pIPayment + taxes + mortgageInsur + insurance + downPmt);
+
+        const data = { taxes, mortgageInsur, insurance, pIPayment, mortgageAmount, downPmt };
+        return data
     },
     addMessages: (maxFinal, maxCounty, downPmt, ltv) => {
 
