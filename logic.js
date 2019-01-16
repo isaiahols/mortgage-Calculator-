@@ -139,12 +139,12 @@ const logic = {
         return ltv;
     },
 
-    pmt: (rate, nper, pv, max, extra, count = 0) => {
+    pmt: (rate, years, pv, max, extra, count = 0) => {
 
 
         // Declerations
         const r = logic.rateConverter(rate);
-        const n = logic.nperConverter(nper);
+        const n = logic.nperConverter(years);
         let mi = 0;
 
         // Actual calc for payment
@@ -202,7 +202,7 @@ const logic = {
         }
 
         // console.log(' --- ')
-        return logic.pmt(rate, nper, newerPV, max, extra, count)
+        return logic.pmt(rate, years, newerPV, max, extra, count)
     },
     findReturnData: (maxValue, downPmt, credit, state, years) => {
         const ltv = logic.findLTV(maxValue, downPmt, true)
@@ -212,16 +212,40 @@ const logic = {
         const interestRate = logic.findRate()
 
         // return P&I payment, 
-        const pIPayment = (maxValue - downPmt) * (1 + interestRate * .01)
+        const pIPayment = logic.realPmt(interestRate / 100 / 12, years * 12, maxValue)
+        console.log("pIPayment", pIPayment)
+        // const pIPayment = (maxValue - downPmt) * (1 + interestRate * .01)
         // taxes and insurance
         const taxes = maxValue * taxRate;
         const insurance = (maxValue - downPmt) * insureRate;
         //mortgage insurance
         const mortgageInsur = (maxValue - downPmt) * mi;
 
-        const mortgageAmount = (pIPayment + taxes + mortgageInsur + insurance + downPmt);
+        const mortgageAmount = (maxValue - downPmt);
+        const MonthlyMortageAmt = mortgageAmount / 12 / years
 
-        const data = { taxes, mortgageInsur, insurance, pIPayment, mortgageAmount, downPmt };
+
+        // Monthly Things
+        const monthlyTaxes = taxes / years / 12;
+        const monthlyInsurance = insurance / years / 12;
+        const monthlyMortInsurance = mortgageInsur / years / 12;
+        const monthlyTaxAndInsure = (taxes + insurance) / years / 12;
+
+
+        // Final Obj of Stuff
+        const data = {
+            taxes,
+            mortgageInsur,
+            insurance,
+            pIPayment,
+            mortgageAmount,
+            downPmt,
+            // MonthlyMortageAmt,
+            // monthlyTaxes, 
+            // monthlyInsurance, 
+            // monthlyMortInsurance, 
+            // monthlyTaxAndInsure
+        };
         return data
     },
     addMessages: (maxFinal, maxCounty, downPmt, ltv) => {
