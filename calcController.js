@@ -54,10 +54,10 @@ module.exports = {
         const maxValue = Math.min(maxValueRatio, countyLimit, maxValueDP);
         // find LTV estimate based on max value 
         let ltv = logic.findLTV(maxValue, downPmt);
-        const mi = logic.findMI(credit, ltv, years);
+        const mi = logic.findMI(credit, ltv, years, loanType);
 
         // This is the recursive function that does the actual calculations 
-        let mortgageAmountData = logic.pmt(r, years, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit, years, credit })
+        let mortgageAmountData = logic.pmt(r, years, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit, years, credit, loanType })
 
         let { finalAmt: maxHomeValue, compare: monthlyPayment } = mortgageAmountData;
 
@@ -70,7 +70,7 @@ module.exports = {
 
         ltv = logic.findLTV(maxHomeValue, downPmt, true)
 
-        const extraData = logic.findReturnData(maxHomeValue, downPmt, credit, state, years)
+        const extraData = logic.findReturnData(maxHomeValue, downPmt, credit, state, years, monthlyPayment)
         const messagesAdded = logic.addMessages(maxHomeValue, countyLimit, downPmt, ltv)
         extraData.monthlyPayment = monthlyPayment;
 

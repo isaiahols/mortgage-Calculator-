@@ -2,6 +2,7 @@ const axios = require('axios')
 const miTable = require('./dataTables/miTable.json');
 const taxInsurance = require('./dataTables/taxInsurance.json');
 const loanLimits = require('./dataTables/loanLimits.json');
+const fhaMiTable = require('./dataTables/fhaMiTable.json');
 
 let rates = 4
 
@@ -70,24 +71,49 @@ const logic = {
         return insuranceRate
     },
 
-    findMI: (credit, ltv, years) => {
-        const creditFiltered = miTable.filter(e => {
+    findMI: (credit, ltv, years, loanType) => {
+        let ltvFiltered, rate;
 
-            if (e.Credit.slice(0, 3) === credit.slice(0, 3)) {
-                return e
+        // Check what loan type for different rate tables and rates
+        if (loanType === 'Conv.') {
+            // find all rates for credit range
+            const creditFiltered = miTable.filter(e => {
+
+                if (e.Credit.slice(0, 3) === credit.slice(0, 3)) {
+                    return e
+                }
+            })
+
+            // finds specific rate based on LTV range
+            ltvFiltered = creditFiltered.find(e => {
+                const ltvRange = e["LTV Range"].split('');
+
+                let upperLimit = ltvRange.slice(6).join('') * 1;
+                let lowerLimit = ltvRange.slice(0, 5).join('') * 1;
+
+                if (ltv <= upperLimit && ltv >= lowerLimit) {
+                    return e
+                }
+            })
+            // get rate based on length of loan
+            rate = years <= 20 ? ltvFiltered["<= 20 yr"] : ltvFiltered["> 20 yr"];
+            rate = rate.slice(0, 4) / 100
+        } else if (loanType === 'FHA') {
+            let yearFiltered
+            // check for length of loan
+            if (years > 15) {
+                yearFiltered = fhaMiTable[0]
+            } else {
+                yearFiltered = fhaMiTable[1]
             }
-        })
 
-        let ltvFiltered = creditFiltered.find(e => {
-            const ltvRange = e["LTV Range"].split('');
+            let ltvPivot = yearFiltered["ltvPivot"];
 
-            let upperLimit = ltvRange.slice(6).join('') * 1;
-            let lowerLimit = ltvRange.slice(0, 5).join('') * 1;
+            // select specific rate based on ltv
+            rate = yearFiltered.ltvPivot <= ltvPivot ? yearFiltered.ltv[`<=${ltvPivot}`] : yearFiltered.ltv[`>${ltvPivot}`]
 
-            if (ltv <= upperLimit && ltv >= lowerLimit) {
-                return e
-            }
-        })
+            rate = rate / 1000
+        }
 
 
         const middleData = {
@@ -102,10 +128,8 @@ const logic = {
 
         ltvFiltered = ltvFiltered || middleData;
 
-        let rate = years <= 20 ? ltvFiltered["<= 20 yr"] : ltvFiltered["> 20 yr"];
-        rate = rate.slice(0, 4) / 100
 
-        return rate || "0.40"
+        return rate || "0.0040"
     },
 
     findCountyLimit: (state, county, type) => {
@@ -150,9 +174,6 @@ const logic = {
         // Actual calc for payment
 
         const pay = logic.realPmt(r, n, pv)
-        // const pay = ((pv*r)/(1-Math.pow(1+r,-n)))
-
-
 
 
 
@@ -176,11 +197,12 @@ const logic = {
 
         // const tax = pv * extra.taxRate / 12
         const tax = (pv + extra.downPmt) * extra.taxRate / 12;
-        const insurance = (pv + extra.downPmt) * extra.insureRate / 12;
+        const insurance = pv * extra.insureRate / 12;
         // // ***** QUESTIONS ***** // //
         // do taxes apply to the total value of the home?
         // do the taxes need to take into account the down payment?
-        const compare = Math.round(pay + mi + tax + insurance)
+        const otherThings = extra.loanType === "FHA" ? (pv + extra.downPmt) * extra.taxRate / 12 : 0;
+        const compare = Math.round(pay + mi + tax + insurance + otherThings)
         const delta = compare / max;
 
 
@@ -192,10 +214,19 @@ const logic = {
         if (compare === max || count === 2000) {
             if (count === 2000) console.log('ran out of time');
             console.log('count', count)
+            console.log('mortgage Payments', pay);
+            console.log('total payment', compare)
+            console.log('loan max', pv);
+
             if (pv > extra.countyLimit) {
                 console.log('County Limit is the best you can do')
                 const finalAmt = extra.countyLimit + extra.downPmt
-                return { finalAmt, compare }
+                const pIPay = logic.realPmt(r, n, extra.countyLimit)
+
+                const monthlyPay = pIPay + mi + tax + insurance + otherThings
+                console.log('ending', monthlyPay);
+
+                return { finalAmt, compare: monthlyPay }
             }
             const finalAmt = newerPV + extra.downPmt
             return { finalAmt, compare }
@@ -204,7 +235,7 @@ const logic = {
         // console.log(' --- ')
         return logic.pmt(rate, years, newerPV, max, extra, count)
     },
-    findReturnData: (maxValue, downPmt, credit, state, years) => {
+    findReturnData: (maxValue, downPmt, credit, state, years, monthlyPay) => {
         const ltv = logic.findLTV(maxValue, downPmt, true)
         const insureRate = logic.findInsuranceRate(state)
         const mi = logic.findMI(credit, ltv, years)
@@ -212,39 +243,43 @@ const logic = {
         const interestRate = logic.findRate()
 
         // return P&I payment, 
-        const pIPayment = logic.realPmt(interestRate / 100 / 12, years * 12, maxValue)
+        const r = logic.rateConverter(interestRate)
+        const n = logic.nperConverter(years)
+
+        const pIPayment = logic.realPmt(r, n, maxValue - downPmt)
         console.log("pIPayment", pIPayment)
         // const pIPayment = (maxValue - downPmt) * (1 + interestRate * .01)
         // taxes and insurance
         const taxes = maxValue * taxRate;
         const insurance = (maxValue - downPmt) * insureRate;
         //mortgage insurance
-        const mortgageInsur = (maxValue - downPmt) * mi;
+        const mortgageInsure = (maxValue - downPmt) * mi;
 
-        const mortgageAmount = (maxValue - downPmt);
-        const MonthlyMortageAmt = mortgageAmount / 12 / years
+        const loanAmount = (maxValue - downPmt);
+        // const MonthlyMortgageAmt = loanAmount / 12
 
 
         // Monthly Things
-        const monthlyTaxes = taxes / years / 12;
-        const monthlyInsurance = insurance / years / 12;
-        const monthlyMortInsurance = mortgageInsur / years / 12;
-        const monthlyTaxAndInsure = (taxes + insurance) / years / 12;
-
+        // const monthlyTaxes = taxes / 12;
+        // const monthlyInsurance = insurance / 12;
+        const monthlyMortInsurance = mortgageInsure / 12;
+        const monthlyTaxAndInsurance = (taxes + insurance) / 12;
+        const other = monthlyPay-  (pIPayment + monthlyMortInsurance + monthlyTaxAndInsurance)
 
         // Final Obj of Stuff
         const data = {
-            taxes,
-            mortgageInsur,
-            insurance,
+            // taxes,
+            // mortgageInsure,
+            // insurance,
             pIPayment,
-            mortgageAmount,
+            loanAmount,
             downPmt,
-            // MonthlyMortageAmt,
+            // MonthlyMortgageAmt,
             // monthlyTaxes, 
             // monthlyInsurance, 
-            // monthlyMortInsurance, 
-            // monthlyTaxAndInsure
+            monthlyMortInsurance,
+            monthlyTaxAndInsurance,
+            other,
         };
         return data
     },
