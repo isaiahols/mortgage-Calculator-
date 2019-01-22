@@ -70,7 +70,7 @@ module.exports = {
 
         ltv = logic.findLTV(maxHomeValue, downPmt, true)
 
-        const extraData = logic.findReturnData(maxHomeValue, downPmt, credit, state, years, monthlyPayment)
+        const extraData = logic.findReturnData(maxHomeValue, downPmt, credit, state, years, monthlyPayment, loanType)
         const messagesAdded = logic.addMessages(maxHomeValue, countyLimit, downPmt, ltv)
         extraData.monthlyPayment = monthlyPayment;
 

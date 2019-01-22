@@ -183,9 +183,12 @@ const logic = {
         extra.ltv = ltv;
 
 
-        if (extra.ltv > 80) {
-            extra.mi = logic.findMI(extra.credit, ltv, extra.years);
+        if (extra.ltv > 80 && extra.loanType !== "VA") {
+            extra.mi = logic.findMI(extra.credit, ltv, extra.years, extra.loanType);
+            console.log("MI rate", extra.mi)
+
             mi = (extra.mi * (pv / 12));
+            console.log("ltv", ltv)
         }
         count++;
 
@@ -201,8 +204,8 @@ const logic = {
         // // ***** QUESTIONS ***** // //
         // do taxes apply to the total value of the home?
         // do the taxes need to take into account the down payment?
-        const otherThings = extra.loanType === "FHA" ? (pv + extra.downPmt) * extra.taxRate / 12 : 0;
-        const compare = Math.round(pay + mi + tax + insurance + otherThings)
+        // const otherThings = extra.loanType === "FHA" ? (pv + extra.downPmt) * extra.taxRate / 12 : 0;
+        const compare = Math.round(pay + mi + tax + insurance)
         const delta = compare / max;
 
 
@@ -217,17 +220,25 @@ const logic = {
             console.log('mortgage Payments', pay);
             console.log('total payment', compare)
             console.log('loan max', pv);
+            // const fundingFeeRate = 0;
+            // let otherThings = 0;
+            // if (extra.loanType === "VA") {
+            // } else if (extra.loanType === "FHA") {
+            //     fundingFeeRate = 0.0175
+            // }
+
 
             if (pv > extra.countyLimit) {
                 console.log('County Limit is the best you can do')
                 const finalAmt = extra.countyLimit + extra.downPmt
                 const pIPay = logic.realPmt(r, n, extra.countyLimit)
-
-                const monthlyPay = pIPay + mi + tax + insurance + otherThings
+                // otherThings = fundingFeeRate * finalAmt
+                const monthlyPay = pIPay + mi + tax + insurance
                 console.log('ending', monthlyPay);
 
                 return { finalAmt, compare: monthlyPay }
             }
+            // otherThings = fundingFeeRate * finalAmt
             const finalAmt = newerPV + extra.downPmt
             return { finalAmt, compare }
         }
@@ -235,7 +246,7 @@ const logic = {
         // console.log(' --- ')
         return logic.pmt(rate, years, newerPV, max, extra, count)
     },
-    findReturnData: (maxValue, downPmt, credit, state, years, monthlyPay) => {
+    findReturnData: (maxValue, downPmt, credit, state, years, monthlyPay, loanType) => {
         const ltv = logic.findLTV(maxValue, downPmt, true)
         const insureRate = logic.findInsuranceRate(state)
         const mi = logic.findMI(credit, ltv, years)
@@ -253,7 +264,14 @@ const logic = {
         const taxes = maxValue * taxRate;
         const insurance = (maxValue - downPmt) * insureRate;
         //mortgage insurance
-        const mortgageInsure = (maxValue - downPmt) * mi;
+
+        let mortgageInsurance
+            = 0;
+        if (ltv > 80 && loanType !== "VA") {
+
+            mortgageInsurance
+                = (maxValue - downPmt) * mi;
+        }
 
         const loanAmount = (maxValue - downPmt);
         // const MonthlyMortgageAmt = loanAmount / 12
@@ -262,14 +280,15 @@ const logic = {
         // Monthly Things
         // const monthlyTaxes = taxes / 12;
         // const monthlyInsurance = insurance / 12;
-        const monthlyMortInsurance = mortgageInsure / 12;
+        const monthlyMortInsurance = mortgageInsurance
+            / 12;
         const monthlyTaxAndInsurance = (taxes + insurance) / 12;
-        const other = monthlyPay-  (pIPayment + monthlyMortInsurance + monthlyTaxAndInsurance)
+        const other = monthlyPay - (pIPayment + monthlyMortInsurance + monthlyTaxAndInsurance)
 
         // Final Obj of Stuff
         const data = {
             // taxes,
-            // mortgageInsure,
+            // mortgageInsurance,
             // insurance,
             pIPayment,
             loanAmount,
