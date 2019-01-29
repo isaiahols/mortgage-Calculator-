@@ -112,7 +112,7 @@ const logic = {
             // select specific rate based on ltv
             rate = yearFiltered.ltvPivot <= ltvPivot ? yearFiltered.ltv[`<=${ltvPivot}`] : yearFiltered.ltv[`>${ltvPivot}`]
 
-            rate = rate / 1000
+            rate /= 100
         }
 
 
@@ -164,9 +164,9 @@ const logic = {
     },
 
     pmt: (rate, years, pv, max, extra, count = 0) => {
+        console.log("Max PV (line 167)", pv)
 
-
-        // Declerations
+        // Declarations
         const r = logic.rateConverter(rate);
         const n = logic.nperConverter(years);
         let mi = 0;
@@ -185,10 +185,10 @@ const logic = {
 
         if (extra.ltv > 80 && extra.loanType !== "VA") {
             extra.mi = logic.findMI(extra.credit, ltv, extra.years, extra.loanType);
-            console.log("MI rate", extra.mi)
+            // console.log("MI rate", extra.mi)
 
             mi = (extra.mi * (pv / 12));
-            console.log("ltv", ltv)
+            // console.log("ltv", ltv)
         }
         count++;
 
@@ -198,18 +198,19 @@ const logic = {
 
         // Things used in testing and Recursion section
 
-        // const tax = pv * extra.taxRate / 12
-        const tax = (pv + extra.downPmt) * extra.taxRate / 12;
-        const insurance = pv * extra.insureRate / 12;
+        let tax = (pv + extra.downPmt) * extra.taxRate / 12;
+        let insurance = (pv + extra.downPmt) * extra.insureRate / 12;
         // // ***** QUESTIONS ***** // //
         // do taxes apply to the total value of the home?
-        // do the taxes need to take into account the down payment?
+        // does the Insurance need to take into account the down payment?
         // const otherThings = extra.loanType === "FHA" ? (pv + extra.downPmt) * extra.taxRate / 12 : 0;
         const compare = Math.round(pay + mi + tax + insurance)
         const delta = compare / max;
+        console.log("Compare vs Max", compare, max);
 
 
         const newerPV = pv + (compare - max < 0 ? (delta < .9 ? pv * .3 : pv * .01) : (delta > 1.1 ? -(pv * .3) : -pv * .01));
+
 
 
         // testing and Recursion
@@ -232,6 +233,9 @@ const logic = {
                 console.log('County Limit is the best you can do')
                 const finalAmt = extra.countyLimit + extra.downPmt
                 const pIPay = logic.realPmt(r, n, extra.countyLimit)
+                mi = extra.mi * ((finalAmt - extra.downPmt) / 12);
+                tax = finalAmt * extra.taxRate / 12;
+                insurance = finalAmt * extra.insureRate / 12;
                 // otherThings = fundingFeeRate * finalAmt
                 const monthlyPay = pIPay + mi + tax + insurance
                 console.log('ending', monthlyPay);
@@ -249,7 +253,7 @@ const logic = {
     findReturnData: (maxValue, downPmt, credit, state, years, monthlyPay, loanType) => {
         const ltv = logic.findLTV(maxValue, downPmt, true)
         const insureRate = logic.findInsuranceRate(state)
-        const mi = logic.findMI(credit, ltv, years)
+        const miRate = logic.findMI(credit, ltv, years, loanType)
         const taxRate = logic.findTaxRate(state)
         const interestRate = logic.findRate()
 
@@ -257,61 +261,64 @@ const logic = {
         const r = logic.rateConverter(interestRate)
         const n = logic.nperConverter(years)
 
+        // independent Principal and Interest Payment Check
         const pIPayment = logic.realPmt(r, n, maxValue - downPmt)
-        console.log("pIPayment", pIPayment)
-        // const pIPayment = (maxValue - downPmt) * (1 + interestRate * .01)
-        // taxes and insurance
-        const taxes = maxValue * taxRate;
-        const insurance = (maxValue - downPmt) * insureRate;
-        //mortgage insurance
 
-        let mortgageInsurance
+
+        //Getting Values
+        const loanAmount = (maxValue - downPmt);
+        let mi
             = 0;
         if (ltv > 80 && loanType !== "VA") {
-
-            mortgageInsurance
-                = (maxValue - downPmt) * mi;
+            mi = miRate * (loanAmount / 12)
         }
+        const tax = (maxValue) * taxRate / 12;
+        const insurance = (maxValue) * insureRate / 12;
 
-        const loanAmount = (maxValue - downPmt);
-        // const MonthlyMortgageAmt = loanAmount / 12
+
+        const monthlyTaxAndInsurance = (tax + insurance);
+        const independentCheck = (monthlyPay - (pIPayment + mi + monthlyTaxAndInsurance))
 
 
-        // Monthly Things
-        // const monthlyTaxes = taxes / 12;
-        // const monthlyInsurance = insurance / 12;
-        const monthlyMortInsurance = mortgageInsurance
-            / 12;
-        const monthlyTaxAndInsurance = (taxes + insurance) / 12;
-        const other = monthlyPay - (pIPayment + monthlyMortInsurance + monthlyTaxAndInsurance)
+
 
         // Final Obj of Stuff
         const data = {
-            // taxes,
-            // mortgageInsurance,
-            // insurance,
             pIPayment,
             loanAmount,
             downPmt,
-            // MonthlyMortgageAmt,
-            // monthlyTaxes, 
-            // monthlyInsurance, 
-            monthlyMortInsurance,
-            monthlyTaxAndInsurance,
-            other,
+            mi,
+            tax,
+            insurance,
+            monthlyPay,
+            independentCheck,
         };
         return data
     },
     addMessages: (maxFinal, maxCounty, downPmt, ltv) => {
+        // console.log("Message Parts Max Final", maxFinal);
+        // console.log("Message Parts Max County", maxCounty);
+        // console.log("Message Parts Down Payment", downPmt);
+        // console.log("Message Parts LTV", ltv);
 
         let message = 'Here are your results';
         if (ltv > 97) {
             message = 'Down Payment is to small'
-        } else if (maxFinal - downPmt === maxCounty) {
+        } else if ((maxFinal - downPmt) === maxCounty) {
             message = 'You have reached the county limit'
         }
         return message
     },
+    addVersionNotes: () => {
+        return ({
+            version: "1.1.6",
+            releaseDate: "Jan 29 2018"
+        })
+    }
 };
 
 module.exports = logic;
+
+// ** React in existing WordPress site **//
+// https://medium.com/@ReactionGears/react-app-inside-a-wordpress-page-or-post-4c7d38181b3d
+// https://reactjs.org/docs/add-react-to-a-website.html

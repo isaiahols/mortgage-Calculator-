@@ -50,11 +50,20 @@ module.exports = {
         const maxValueDP = logic.maxLoanDP(downPmt);
         const maxValueRatio = logic.pv(r, years, maxPmt);
 
+        // console.log("Max Val Ratio", maxValueRatio);
+        // console.log("Max County Limit", countyLimit);
+        // console.log("Max Val DP", maxValueDP);
+
         // This is the max value
         const maxValue = Math.min(maxValueRatio, countyLimit, maxValueDP);
+
+
+
         // find LTV estimate based on max value 
         let ltv = logic.findLTV(maxValue, downPmt);
         const mi = logic.findMI(credit, ltv, years, loanType);
+
+        console.log(("maxValue", maxValue));
 
         // This is the recursive function that does the actual calculations 
         let mortgageAmountData = logic.pmt(r, years, maxValue, maxPmt, { ltv, mi, insureRate, taxRate, downPmt, countyLimit, years, credit, loanType })
@@ -73,8 +82,9 @@ module.exports = {
         const extraData = logic.findReturnData(maxHomeValue, downPmt, credit, state, years, monthlyPayment, loanType)
         const messagesAdded = logic.addMessages(maxHomeValue, countyLimit, downPmt, ltv)
         extraData.monthlyPayment = monthlyPayment;
+        const version = logic.addVersionNotes()
 
-        res.status(200).send({ maxHomeValue, message: messagesAdded, extraData })
+        res.status(200).send({ maxHomeValue, message: messagesAdded, extraData, version })
     },
     data: (req, res) => {
         res.status(200).send('here is some data')
