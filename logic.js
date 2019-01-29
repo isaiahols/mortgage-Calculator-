@@ -182,13 +182,16 @@ const logic = {
         const ltv = logic.findLTV(pv, extra.downPmt);
         extra.ltv = ltv;
 
+        if (extra.loanType !== "VA" || extra.loanType !== 'Jumbo') {
+            extra.miRateRate = 0
+        } else if (extra.ltv > 80) {
+            extra.miRate = logic.findMI(extra.credit, ltv, extra.years, extra.loanType);
+            // console.log("MI rate", extra.miRate)
 
-        if (extra.ltv > 80 && extra.loanType !== "VA") {
-            extra.mi = logic.findMI(extra.credit, ltv, extra.years, extra.loanType);
-            // console.log("MI rate", extra.mi)
-
-            mi = (extra.mi * (pv / 12));
+            mi = (extra.miRate * (pv / 12));
             // console.log("ltv", ltv)
+        } else {
+
         }
         count++;
 
@@ -231,19 +234,25 @@ const logic = {
 
             if (pv > extra.countyLimit) {
                 console.log('County Limit is the best you can do')
-                const finalAmt = extra.countyLimit + extra.downPmt
+                let finalAmt = extra.countyLimit + extra.downPmt
                 const pIPay = logic.realPmt(r, n, extra.countyLimit)
-                mi = extra.mi * ((finalAmt - extra.downPmt) / 12);
+                // Re-find values
+                mi = extra.miRate * ((finalAmt - extra.downPmt) / 12);
                 tax = finalAmt * extra.taxRate / 12;
                 insurance = finalAmt * extra.insureRate / 12;
-                // otherThings = fundingFeeRate * finalAmt
+
                 const monthlyPay = pIPay + mi + tax + insurance
                 console.log('ending', monthlyPay);
+                if (extra.loanType === "FHA") {
+                    finalAmt *= (1 - 0.0175)
+                }
 
                 return { finalAmt, compare: monthlyPay }
             }
-            // otherThings = fundingFeeRate * finalAmt
-            const finalAmt = newerPV + extra.downPmt
+            let finalAmt = pv + extra.downPmt
+            if (extra.loanType === "FHA") {
+                finalAmt *= (1 - 0.0175)
+            }
             return { finalAmt, compare }
         }
 
@@ -278,7 +287,7 @@ const logic = {
 
         const monthlyTaxAndInsurance = (tax + insurance);
         const independentCheck = (monthlyPay - (pIPayment + mi + monthlyTaxAndInsurance))
-
+        const fundingFee = loanType === "FHA" || loanType === "VA" ? maxValue * 0.0175 : 0;
 
 
 
@@ -290,6 +299,7 @@ const logic = {
             mi,
             tax,
             insurance,
+            fundingFee,
             monthlyPay,
             independentCheck,
         };
@@ -311,7 +321,7 @@ const logic = {
     },
     addVersionNotes: () => {
         return ({
-            version: "1.1.6",
+            version: "1.1.7",
             releaseDate: "Jan 29 2018"
         })
     }
