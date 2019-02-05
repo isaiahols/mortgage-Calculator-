@@ -24,7 +24,19 @@ const logic = {
     },
 
     maxPmt: (income, debts, alimony, childSupport, childCareVA, hoa, type) => {
-        const combinedRatio = (type === 'Conv.' || type === 'Jumbo') ? .45 : .5;
+        // const combinedRatio = (type === 'Conv.' || type === 'Jumbo') ? .45 : .5;
+        let combinedRatio = .45;
+        switch (type) {
+            case "FHA":
+                combinedRatio = .49
+                break;
+            case "VA":
+                combinedRatio = .48
+                break;
+            default:
+                combinedRatio = .45
+                break;
+        }
         const maxPayment = (combinedRatio * income) - (debts + alimony + childSupport + childCareVA + hoa);
         return maxPayment;
     },
@@ -197,22 +209,27 @@ const logic = {
 
 
 
-
+        // // //*** WHAT IS PIM ***// // //
+        // loan amount times 0.0175
 
         // Things used in testing and Recursion section
 
         let tax = (pv + extra.downPmt) * extra.taxRate / 12;
         let insurance = (pv + extra.downPmt) * extra.insureRate / 12;
+        let pim = 0;
+        if (extra.loanType === "FHA") {
+            // pim = pv / 30 / 12
+        }
+        // const 
         // // ***** QUESTIONS ***** // //
         // do taxes apply to the total value of the home?
         // does the Insurance need to take into account the down payment?
         // const otherThings = extra.loanType === "FHA" ? (pv + extra.downPmt) * extra.taxRate / 12 : 0;
-        const compare = Math.round(pay + mi + tax + insurance)
+        const compare = Math.round(pay + mi + tax + insurance + pim)
         const delta = compare / max;
         // console.log("Compare vs Max", compare, max);
 
 
-        const newerPV = pv + (compare - max < 0 ? (delta < .9 ? pv * .3 : pv * .01) : (delta > 1.1 ? -(pv * .3) : -pv * .01));
 
 
 
@@ -255,6 +272,9 @@ const logic = {
             }
             return { finalAmt, compare }
         }
+
+        const newerPV = pv + (compare - max < 0 ? (delta < .9 ? pv * .3 : pv * .01) : (delta > 1.1 ? -(pv * .3) : -pv * .01));
+
 
         // console.log(' --- ')
         return logic.mainCalc(rate, years, newerPV, max, extra, count)
@@ -314,6 +334,9 @@ const logic = {
         };
         return data
     },
+
+
+
     addMessages: (maxFinal, maxCounty, downPmt, ltv) => {
         // console.log("Message Parts Max Final", maxFinal);
         // console.log("Message Parts Max County", maxCounty);
