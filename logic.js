@@ -268,7 +268,7 @@ const logic = {
 
 
         if (loanType === "FHA") {
-            maxValue *= 1.0175
+            // maxValue *= 1.0175
         }
         // return P&I payment, 
         const r = logic.rateConverter(interestRate)
