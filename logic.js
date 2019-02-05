@@ -15,7 +15,7 @@ const logic = {
         return pValue;
     },
 
-    realPmt: (r, n, pv) => {
+    pmt: (r, n, pv) => {
         return ((pv * r) / (1 - Math.pow(1 + r, -n)))
     },
 
@@ -163,8 +163,8 @@ const logic = {
         return ltv;
     },
 
-    pmt: (rate, years, pv, max, extra, count = 0) => {
-        console.log("Max PV (line 167)", pv)
+    mainCalc: (rate, years, pv, max, extra, count = 0) => {
+        // console.log("Max PV (line 167)", pv)
 
         // Declarations
         const r = logic.rateConverter(rate);
@@ -173,7 +173,7 @@ const logic = {
 
         // Actual calc for payment
 
-        const pay = logic.realPmt(r, n, pv)
+        const pay = logic.pmt(r, n, pv)
 
 
 
@@ -209,7 +209,7 @@ const logic = {
         // const otherThings = extra.loanType === "FHA" ? (pv + extra.downPmt) * extra.taxRate / 12 : 0;
         const compare = Math.round(pay + mi + tax + insurance)
         const delta = compare / max;
-        console.log("Compare vs Max", compare, max);
+        // console.log("Compare vs Max", compare, max);
 
 
         const newerPV = pv + (compare - max < 0 ? (delta < .9 ? pv * .3 : pv * .01) : (delta > 1.1 ? -(pv * .3) : -pv * .01));
@@ -235,7 +235,7 @@ const logic = {
             if (pv > extra.countyLimit) {
                 console.log('County Limit is the best you can do')
                 let finalAmt = extra.countyLimit + extra.downPmt
-                const pIPay = logic.realPmt(r, n, extra.countyLimit)
+                const pIPay = logic.pmt(r, n, extra.countyLimit)
                 // Re-find values
                 mi = extra.miRate * ((finalAmt - extra.downPmt) / 12);
                 tax = finalAmt * extra.taxRate / 12;
@@ -257,7 +257,7 @@ const logic = {
         }
 
         // console.log(' --- ')
-        return logic.pmt(rate, years, newerPV, max, extra, count)
+        return logic.mainCalc(rate, years, newerPV, max, extra, count)
     },
     findReturnData: (maxValue, downPmt, credit, state, years, monthlyPay, loanType) => {
         const ltv = logic.findLTV(maxValue, downPmt, true)
@@ -266,12 +266,16 @@ const logic = {
         const taxRate = logic.findTaxRate(state)
         const interestRate = logic.findRate()
 
+
+        if (loanType === "FHA") {
+            maxValue *= 1.0175
+        }
         // return P&I payment, 
         const r = logic.rateConverter(interestRate)
         const n = logic.nperConverter(years)
 
         // independent Principal and Interest Payment Check
-        const pIPayment = logic.realPmt(r, n, maxValue - downPmt)
+        const pIPayment = logic.pmt(r, n, maxValue - downPmt)
 
 
         //Getting Values
@@ -286,7 +290,11 @@ const logic = {
 
 
         const monthlyTaxAndInsurance = (tax + insurance);
-        const independentCheck = (monthlyPay - (pIPayment + mi + monthlyTaxAndInsurance))
+        let otherFees = 0;
+        if (loanType === "FHA") {
+            // otherFees += pIPayment * 0.0175;
+        }
+        const independentCheck = (monthlyPay - (pIPayment + mi + monthlyTaxAndInsurance + otherFees))
         const fundingFee = loanType === "FHA" || loanType === "VA" ? maxValue * 0.0175 : 0;
 
 
@@ -296,10 +304,11 @@ const logic = {
             pIPayment,
             loanAmount,
             downPmt,
+            fundingFee,
             mi,
             tax,
             insurance,
-            fundingFee,
+            otherFees,
             monthlyPay,
             independentCheck,
         };
@@ -321,8 +330,12 @@ const logic = {
     },
     addVersionNotes: () => {
         return ({
-            version: "1.1.7",
-            releaseDate: "Jan 29 2018"
+            version: "1.1.7.3",
+            releaseDate: "04 Feb 2019",
+            currentIssues: [
+                "Conv. still coming out high after adding funding Fee",
+                "Not sure if funding fee is taken of after mi , tax, and insurance are calculated as with the excel doc or if those should take funding fee into account"
+            ]
         })
     }
 };

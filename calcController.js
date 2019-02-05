@@ -66,7 +66,7 @@ module.exports = {
         console.log(("maxValue", maxValue));
 
         // This is the recursive function that does the actual calculations 
-        let mortgageAmountData = logic.pmt(r, years, maxValue, maxPmt, { ltv, miRate, insureRate, taxRate, downPmt, countyLimit, years, credit, loanType })
+        let mortgageAmountData = logic.mainCalc(r, years, maxValue, maxPmt, { ltv, miRate, insureRate, taxRate, downPmt, countyLimit, years, credit, loanType })
 
         let { finalAmt: maxHomeValue, compare: monthlyPayment } = mortgageAmountData;
 
